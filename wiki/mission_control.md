@@ -11,7 +11,7 @@ Bu sayfa, projenin ana hedeflerini ve o anki odak noktasını takip eder.
 ## 📡 Mevcut Durum (v2.0)
 - **Aktif Site:** `erpnext-production-1b2e.up.railway.app`
 - **Modül:** `izge_travel` (GitHub: `ahmettas21/CRM`)
-- **Odak Noktası:** Operasyonel süreçleri (Trip, Segment) canlandırmak.
+- **Odak Noktası:** [BUG-X1Z5P] Menü görünmeme sorunu (Workspace Meta Sync) gideriliyor.
 
 ## 🚦 Durum Panosu
 | Görev | Durum | Öncelik |

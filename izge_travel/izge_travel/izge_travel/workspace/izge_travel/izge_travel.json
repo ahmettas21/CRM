@@ -1,6 +1,5 @@
 {
  "charts": [],
- "content": "[{\"type\":\"shortcut\",\"data\":{\"label\":\"Trip List\",\"icon\":\"travel\",\"link_type\":\"DocType\",\"doc_view\":\"List\",\"doctype\":\"Trip\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Traveler List\",\"icon\":\"user\",\"link_type\":\"DocType\",\"doc_view\":\"List\",\"doctype\":\"Traveler\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Muhasebe - Satış Faturaları\",\"icon\":\"money\",\"link_type\":\"DocType\",\"doc_view\":\"List\",\"doctype\":\"Sales Invoice\"}}]",
  "creation": "2026-04-14 23:00:00.000000",
  "docstatus": 0,
  "doctype": "Workspace",
@@ -11,7 +10,6 @@
  "label": "Izge Travel",
  "links": [
   {
-   "dependencies": "",
    "hidden": 0,
    "is_query_report": 0,
    "label": "Operasyon",
@@ -21,7 +19,6 @@
    "type": "Link"
   },
   {
-   "dependencies": "",
    "hidden": 0,
    "is_query_report": 0,
    "label": "Trip",
@@ -32,7 +29,6 @@
    "type": "Link"
   },
   {
-   "dependencies": "",
    "hidden": 0,
    "is_query_report": 0,
    "label": "Traveler",
@@ -43,7 +39,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-04-14 23:15:00.000000",
+ "modified": "2026-04-14 23:45:00.000000",
  "modified_by": "Administrator",
  "module": "Izge Travel",
  "name": "Izge Travel",
@@ -55,21 +51,16 @@
  "shortcuts": [
   {
    "doc_view": "List",
-   "doctype": "Trip",
-   "icon": "travel",
    "label": "Trip List",
    "link_to": "Trip",
-   "link_type": "DocType",
-   "type": "Shortcut"
+   "type": "DocType"
   },
   {
    "doc_view": "List",
-   "doctype": "Traveler",
-   "icon": "user",
    "label": "Traveler List",
    "link_to": "Traveler",
-   "link_type": "DocType",
-   "type": "Shortcut"
+   "type": "DocType"
   }
- ]
+ ],
+ "title": "Izge Travel"
 }
