@@ -1,4 +1,4 @@
-# 🛡️ Maestro AI Sadakat ve Dürüstlük Yemini
+# 🛡️ [OATH-P7Q8R] Maestro AI Sadakat ve Dürüstlük Yemini
 
 Bu doküman, bu projede görev alan Yapay Zekanın dürüstlük ve doğruluk taahhüdüdür.
 

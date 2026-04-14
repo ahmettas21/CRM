@@ -1,4 +1,4 @@
-# 🚀 Mission Control (Görev Kontrol)
+# 🚀 [GOAL-M4N5O] Mission Control (Görev Kontrol)
 
 Bu sayfa, projenin ana hedeflerini ve o anki odak noktasını takip eder.
 

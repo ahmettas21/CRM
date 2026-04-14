@@ -1,4 +1,4 @@
-# 📖 Maestro Wiki
+# 📖 [NAV-W1X2Y] Maestro Wiki
 Hoş geldiniz. Bu proje **LLM Wiki** protokolü ile yönetilmektedir.
 
 ## 🧭 Navigasyon

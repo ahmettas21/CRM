@@ -1,4 +1,4 @@
-# 📝 Değişim Günlüğü (Log)
+# 📝 [LOG-S9T0U] Değişim Günlüğü (Log)
 
 Tüm teknik değişimler burada kronolojik olarak kaydedilir.
 
@@ -55,11 +55,11 @@ Tüm teknik değişimler burada kronolojik olarak kaydedilir.
 ### 🧾 Trip & Satış Faturası (Sales Invoice) Entegrasyonu
 - Operasyonlardan gelen müşteri bakiyesi istekleri doğrultusunda **Otomatik Taslak Fatura** kurgusu uygulandı.
 - `trip.py` içerisinde `on_submit` ve `on_cancel` kancaları aktifleştirildi.
-  - Biletçi (Acente çalışanı) bir formu `Submit` ettiği an arka planda **Draft (Taslak)** statüsünde Sales Invoice oluşur.
-  - Olası iptallerde, faturanın statusüne bağlı olarak taslak ise silinir, onaylı ise `cancel` işlemine alınır.
-  - `_ensure_item` kontrolcüsüyle, item bulunamazsa kullanıcıya hata vermek yerine arka planda dinamik olarak Item yaratılması (Fall-back) sağlandı.
+- Biletçi (Acente çalışanı) bir formu `Submit` ettiği an arka planda **Draft (Taslak)** statüsünde Sales Invoice oluşur.
+- Olası iptallerde, faturanın statusüne bağlı olarak taslak ise silinir, onaylı ise `cancel` işlemine alınır.
+- `_ensure_item` kontrolcüsüyle, item bulunamazsa kullanıcıya hata vermek yerine arka planda dinamik olarak Item yaratılması (Fall-back) sağlandı.
 - Müşterinin (Müşterinin Carisine) bakiyesinin akması, oluşan bu faturanın muhasebe personeli tarafından kontrol edilip onaylanmasına (Submit edilmesine) bağlandı.
-### 🛡️ Tam Cari Kontrol & Railway SSH Protokolü (Final)
+- ### 🛡️ Tam Cari Kontrol & Railway SSH Protokolü (Final)
 - **Accounting Otomasyonu (v2.0):** `Trip` formu onaylandığında hem Müşteri (Satış Faturası) hem de tüm Tedarikçiler (Alış Faturası) için otomatik fatura oluşturma mantığı tamamlandı.
 - **Teknik Standartlaşma:** `hooks.py`, `trip.py`, `trip.js` ve `setup.py` dosyaları Frappe Skill protokollerine (%100 flt(), super() çağrıları, no manual commit) uygun hale getirildi.
 - **Kritik Hata Onarımı:** Railway üzerinde kopan veritabanı (`db_host`) ve Redis bağlantıları `site_config.json` ve `common_site_config.json` üzerinden dinamik olarak fixlendi.

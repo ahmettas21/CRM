@@ -1,27 +1,41 @@
-# 🆔 Evrensel Kimlik HaritasÄ± (Universal ID Map)
+# 🆔 Evrensel Kimlik Haritası (Universal ID Map)
 
-Bu dosya, projedeki tÃ¼m kural, ders ve yeteneklerin benzersiz kimliklerini takip eder.
+Bu dosya, projedeki tüm kural, ders ve teknik dökümanların **rastgele, benzersiz ve sıralı olmayan** kimliklerini takip eder.
 
-## 🏛️ Kurallar (Rules - [RULE-XXX])
-- **[RULE-001]**: Ä°kiz DokÃ¼man KuralÄ± (Twin Document Rule)
-- **[RULE-002]**: HafÄ±za KaybÄ± YasaÄ\u011fÄ± (No Memory Loss)
-- **[RULE-003]**: "Asla Tahmin Etme" ZÄ±rhÄ± (Self-Verification)
-- **[RULE-004]**: Sandbox & ArÅ\u015fivleme (Anti-Clutter)
-- **[RULE-005]**: Derin BaÄ\u015flantÄ± StandardÄ± (Deep Dive)
-- **[RULE-006]**: Mission Control (Niyet Takibi)
-- **[RULE-007]**: Frappe Skill KullanÄ±m ZorunluluÄ\u011fu
-- **[RULE-008]**: MatruÅ\u015fka KlasÃ¶r YasaÄ\u011fÄ± (Anti-Nesting)
-- **[RULE-009]**: AltÄ±n PIP ProtokolÃ¼ (Subfolder Rule)
-- **[RULE-010]**: Benzersiz Kimlik ProtokolÃ¼ (Unique ID Protocol)
+## 🏛️ Kurallar (Rules - [RULE-XXXXX])
+- **[RULE-X1Y2Z]**: İkiz Doküman Kuralı (Twin Document Rule)
+- **[RULE-P3Q4R]**: Hafıza Kaybı Yasağı (No Memory Loss)
+- **[RULE-M5N6O]**: "Asla Tahmin Etme" Zırhı (Self-Verification)
+- **[RULE-A7B8C]**: Sandbox & Arşivleme (Anti-Clutter)
+- **[RULE-D9E0F]**: Derin Bağlantı Standardı (Deep Dive)
+- **[RULE-G1H2I]**: Mission Control (Niyet Takibi)
+- **[RULE-J3K4L]**: Deployment Yolu (Zorunlu)
+- **[RULE-S5T6U]**: Matruşka Klasör Yasağı (Anti-Nesting)
+- **[RULE-V7W8X]**: Altın PIP Protokolü (Subfolder Rule)
+- **[RULE-Z9A0B]**: Benzersiz Kimlik Protokolü (Unique ID Protocol)
+- **[RULE-C1D2E]**: UTF-8 Karakter Koruma (Encoding Shield)
 
-## 🧠 Hafıza Ã\u0096Ä\u011feleri (Memory - [MEM-XXX])
-- **[MEM-001]**: MatruÅ\u015fka KlasÃ¶r TuzaÄ\u011fÄ± (AÄ\u011fustos 2026 Vak'asÄ±)
-- **[MEM-002]**: Flit/Version build hatasÄ± ve Ã§Ã¶zÃ¼mÃ¼
-- **[MEM-003]**: Railway SSH Base64 sarmalama gerekliliÄ\u011fi
+## 🧠 Hafıza & Tecrübe (Memory - [MEM-XXXXX])
+- **[MEM-K3L4M]**: Matruşka Klasör Tuzağı (Ağustos 2026 Vak'ası)
+- **[MEM-O5P6Q]**: Flit/Version build hatası ve çözümü
+- **[MEM-R7S8T]**: Railway SSH Base64 sarmalama gerekliliği
 
-## 🛠️ Yetenekler (Skills - [SKILL-XXX])
-- **[SKILL-001]**: Frappe-Syntax-CustomApp
-- **[SKILL-002]**: Frappe-Syntax-Doctypes
-- **[SKILL-003]**: Frappe-Syntax-ClientScripts
-- **[SKILL-004]**: Frappe-Syntax-ServerScripts
-- (DiÄ\u011fer 61 skill iÃ§in SKILL-xxx serisi devam eder)
+## ⚙️ Teknik & Operasyonel (High Entropy)
+- **[PROC-C9K8X]**: Cloud & Deployment Operasyon Merkezi (`wiki/cloud.md`)
+- **[TECH-F3M2Y]**: Frappe Uygulama Yapı Standardı (`raw/frappe_structure.md`)
+- **[INFRA-A1B9Z]**: Altyapı Referansı (`raw/infrastructure.md`)
+- **[KNOW-M7L5Q]**: Muhasebe Teknik Diyalogları (`raw/muhasebekonusması.md`)
+
+28: 
+29: ## 🧭 Navigasyon & Durum (Navigation - [NAV-XXXXX])
+30: - **[NAV-W1X2Y]**: Maestro Wiki Ana Sayfa (`wiki/index.md`)
+31: - **[GOAL-M4N5O]**: Mission Control (`wiki/mission_control.md`)
+32: - **[LOG-S9T0U]**: Değişim Günlüğü (`wiki/log.md`)
+33: - **[OATH-P7Q8R]**: AI Sadakat Yemini (`wiki/oath.md`)
+34: 
+35: ## 🛠️ Yetenekler (Skills - [SKILL-XXXXX])
+- **[SKILL-F7G1H]**: Frappe-Syntax-CustomApp
+- **[SKILL-D2S9W]**: Frappe-Syntax-Doctypes
+- **[SKILL-K4L1J]**: Frappe-Syntax-ClientScripts
+- **[SKILL-R9T2M]**: Frappe-Syntax-ServerScripts
+- (Diğer 61 skill için rastgele ID kurgusu devam eder)

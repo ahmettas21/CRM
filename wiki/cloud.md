@@ -1,38 +1,38 @@
-# ☁️ Cloud & Deployment Operasyon Merkezi
+# ☁️ [PROC-C9K8X] Cloud & Deployment Operasyon Merkezi
 
-Bu dÃ¶kÃ¼man, Izge Travel uygulamasÄ±nÄ±n Railway Ã¼zerindeki saÄ\u011flÄ±Ä\u011fÄ±nÄ± ve doÄ\u011fru deployment yÃ¶ntemlerini iÃ§erir.
+Bu dokuman, Izge Travel uygulamasinin Railway uzerindeki sagligini ve dogru deployment yontemlerini icerir.
 
-## 🚀 AltÄ±n Deployment ProtokolÃ¼
+## 🚀 [DEPL-A7V2M] Altin Deployment Protokolu
 
-Kodlar gÃ¼ncellendiÄ\u011finde izlenecek **tek ve sarsÄ±lmaz** yol Å\u015futur:
+Kodlar guncellendiginde izlenecek **tek ve sarsilmaz** yol sudur:
 
 1.  **Yerelde Push:** `git push origin main`
-2.  **Sunucuya BaÄ\u011flantÄ±:** `railway ssh -s erpnext --environment production`
-3.  **GÃ¼ncelleme Komutu (Base64 S-Prototol):**
+2.  **Sunucuya Baglanti:** `railway ssh -s erpnext --environment production`
+3.  **Guncelleme Komutu (Base64 S-Prototol):**
     ```powershell
-    # Bu komut her zaman uygulamayÄ± en gÃ¼ncel hale getirir ve modÃ¼l yollarÄ±nÄ± dÃ¼zeltir
+    # Bu komut her zaman uygulamayi en guncel hale getirir ve modul yollarini duzeltir
     cd /home/frappe/bench/apps/izge_travel
     git fetch origin main
     git reset --hard origin/main
-    # Ã\u0096NEMLÄ°: Alt klasÃ¶rden kurulum Å\u015fart!
+    # ONEMLI: Alt klasorden kurulum sart!
     /home/frappe/bench/env/bin/pip install -e ./izge_travel
     cd /home/frappe/bench
     bench migrate
     ```
 
-## 🛠️ Acil Durum & Kurtarma
+## 🛠️ [RECO-B4N9Q] Acil Durum & Kurtarma
 
-### 1. Dizin Labirenti (MatruÅ\u015fka) HatasÄ±
-EÄ\u011fer `ModuleNotFoundError` alÄ±nÄ±yorsa, sunucuda klasÃ¶rler iÃ§ iÃ§e geÃ§miÅ\u015f demektir. 
-**Ã\u0087Ã¶zÃ¼m:** `rm -rf /home/frappe/bench/apps/izge_travel/izge_travel` yapÄ±p `git reset --hard` ile tertemiz Ã§ekin.
+### 1. [ERR-X1Z5P] Dizin Labirenti (Matruska) Hatasi
+Eger `ModuleNotFoundError` aliniyorsa, sunucuda klasorler ic ice gecmis demektir. 
+**Cozum:** `rm -rf /home/frappe/bench/apps/izge_travel/izge_travel` yapip `git reset --hard` ile tertemiz cekin.
 
-### 2. Tablo/Sekme GÃ¶rÃ¼nmÃ¼yor
-EÄ\u011fer "Trip List" aratÄ±ldÄ±Ä\u011fÄ±nda bulunamÄ±yorsa:
+### 2. [UI-F3W8L] Tablo/Sekme Gorunmuyor
+Eger "Trip List" aratildiginda bulunamiyorsa:
 - `bench clear-cache`
 - `bench clear-website-cache`
-komutlarÄ±nÄ± ardÄ± ardÄ±na Ã§alÄ±Å\u015ftÄ±rÄ±n.
+komutlarini ardi ardina calistirin.
 
-## 🔗 Sunucu Bilgileri
+## 🔗 [INFO-D6K2Y] Sunucu Bilgileri
 - **Host:** `monorail.proxy.rlwy.net`
 - **DB Host:** `mariadb.railway.internal`
 - **Redis:** `redis-cache.railway.internal`

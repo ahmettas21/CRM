@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"type\":\"shortcut\",\"data\":{\"label\":\"Trip List\",\"icon\":\"travel\",\"link_type\":\"DocType\",\"doc_view\":\"List\",\"doctype\":\"Trip\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Traveler List\",\"icon\":\"user\",\"link_type\":\"DocType\",\"doc_view\":\"List\",\"doctype\":\"Traveler\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Muhasebe - SatÄ±Å\u015f FaturalarÄ±\",\"icon\":\"money\",\"link_type\":\"DocType\",\"doc_view\":\"List\",\"doctype\":\"Sales Invoice\"}}]",
+ "content": "[{\"type\":\"shortcut\",\"data\":{\"label\":\"Trip List\",\"icon\":\"travel\",\"link_type\":\"DocType\",\"doc_view\":\"List\",\"doctype\":\"Trip\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Traveler List\",\"icon\":\"user\",\"link_type\":\"DocType\",\"doc_view\":\"List\",\"doctype\":\"Traveler\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Muhasebe - Satış Faturaları\",\"icon\":\"money\",\"link_type\":\"DocType\",\"doc_view\":\"List\",\"doctype\":\"Sales Invoice\"}}]",
  "creation": "2026-04-14 23:00:00.000000",
  "docstatus": 0,
  "doctype": "Workspace",
@@ -43,7 +43,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-04-14 23:00:00.000000",
+ "modified": "2026-04-14 23:15:00.000000",
  "modified_by": "Administrator",
  "module": "Izge Travel",
  "name": "Izge Travel",

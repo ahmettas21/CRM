@@ -1,3 +1,5 @@
+# 📊 [KNOW-M7L5Q] Muhasebe Teknik Diyalogları
+
 Çelişkiler ve mnasıl yapabiliriz konuları:
 
 1- Erpnext de uçak bileti muhasebesi için vergi hespalasmasi nasıl olmalı , yurt içinde uçak bileti base fiyatı + havalimanı vergileri + havayolu KDV si+ acente komisyonu vergisi olacak. yurt dışında ise sadece havayolu ücreti Liman vergileri + acente komisyonu vergisi olacak
