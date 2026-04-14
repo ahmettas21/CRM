@@ -299,6 +299,7 @@ class AquaImporter(Document):
 			sup.supplier_group = sup_group
 			sup.supplier_type = "Company"
 			sup.insert(ignore_permissions=True)
+			frappe.db.commit() # Force commit
 			
 			return sup.name
 		except Exception as e:
