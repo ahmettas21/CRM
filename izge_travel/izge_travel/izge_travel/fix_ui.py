@@ -5,22 +5,17 @@ def fix_everything():
     try:
         if frappe.db.exists("User", "ia"):
             user = frappe.get_doc("User", "ia")
-            # Ensure "System Manager" role exists, otherwise this will fail
             user.add_roles("System Manager")
             print("ia kullanıcısına System Manager yetkisi tanımlandı.")
     except Exception as e:
         print(f"Yetki hatası: {e}")
 
-    # 2. Workspace (Menü) Kontrolü
-    # Force public visibility for the Izge Travel workspace
-    if frappe.db.exists("Workspace", "Izge Travel"):
-        ws = frappe.get_doc("Workspace", "Izge Travel")
-        ws.public = 1
-        ws.is_standard = 1
-        # Set parent_page empty to ensure it's a top-level item
-        ws.parent_page = ""
-        ws.save(ignore_permissions=True)
-        print("Izge Travel Workspace'i herkese açık hale getirildi.")
+    # 2. Workspace (Menü) Sıfırlama
+    # Mevcut kaydı silelim ki dosyadaki yeni 'Standard' hali migrate ile temiz gelsin
+    ws_name = "Izge Travel"
+    if frappe.db.exists("Workspace", ws_name):
+        frappe.delete_doc("Workspace", ws_name, ignore_permissions=True, force=True)
+        print(f"{ws_name} Workspace'i sıfırlandı.")
     
     frappe.db.commit()
     frappe.clear_cache()
