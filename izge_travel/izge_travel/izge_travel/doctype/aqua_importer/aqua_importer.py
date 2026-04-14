@@ -177,9 +177,8 @@ class AquaImporter(Document):
 				})
 			elif modul == "UÇAK":
 				direction = "Outbound" if str(r.get("Yön Durum", "")).upper() == "GIDIS" else "Return"
-				supplier_name = str(r.get("Operatör", r.get("Tedarikçi", ""))).strip()
-				if supplier_name:
-					self._ensure_supplier(supplier_name)
+				supplier_name_raw = str(r.get("Operatör", r.get("Tedarikçi", ""))).strip()
+				supplier_id = self._ensure_supplier(supplier_name_raw)
 
 				trip.append("trip_flight_segments", {
 					"traveler": traveler_id,
@@ -189,7 +188,7 @@ class AquaImporter(Document):
 					"destination": str(r.get("Nereye", "")).strip(),
 					"airline": str(r.get("Havayolu", "")).strip(),
 					"operator": str(r.get("Operatör", "")).strip(),
-					"supplier": supplier_name,
+					"supplier": supplier_id,
 					"supplier_locator": str(r.get("Ted.Pnr.No", "")).strip(),
 					"ticket_no": str(r.get("Bilet No", "")).strip(),
 					"departure_date": self._parse_date(r.get("Uçuş Tarihi")),
@@ -201,14 +200,13 @@ class AquaImporter(Document):
 					"sale_amount": total_sale
 				})
 			elif modul == "OTEL":
-				supplier_name = str(r.get("Tedarikçi", r.get("Operatör", ""))).strip()
-				if supplier_name:
-					self._ensure_supplier(supplier_name)
+				supplier_name_raw = str(r.get("Tedarikçi", r.get("Operatör", ""))).strip()
+				supplier_id = self._ensure_supplier(supplier_name_raw)
 
 				trip.append("trip_hotel_stays", {
 					"traveler": traveler_id,
 					"hotel_name": str(r.get("Otel Adı", "")).strip(),
-					"supplier": supplier_name,
+					"supplier": supplier_id,
 					"supplier_locator": str(r.get("Ted.Pnr.No", "")).strip(),
 					"voucher_no": str(r.get("Voucher No", "")).strip(),
 					"check_in_date": self._parse_date(r.get("Giriş Tarihi")),
@@ -247,15 +245,14 @@ class AquaImporter(Document):
 				origin = str(r.get("Nereden", "")).strip() if category != "Visa" else ""
 				destination = str(r.get("Nereye", "")).strip()
 				
-				supplier_name = str(r.get("Operatör", r.get("Tedarikçi", ""))).strip()
-				if supplier_name:
-					self._ensure_supplier(supplier_name)
+				supplier_name_raw = str(r.get("Operatör", r.get("Tedarikçi", ""))).strip()
+				supplier_id = self._ensure_supplier(supplier_name_raw)
 
 				trip.append("trip_service_items", {
 					"traveler": traveler_id,
 					"service_category": category,
 					"service_name": svc_name,
-					"supplier": supplier_name,
+					"supplier": supplier_id,
 					"supplier_locator": str(r.get("Ted.Pnr.No", "")).strip(),
 					"start_date": self._parse_date(r.get("Uçuş Tarihi", r.get("Giriş Tarihi", ""))),
 					"start_time": self._parse_time(r.get("Kalkış Saati", r.get("Giriş Saati", ""))),
@@ -282,17 +279,27 @@ class AquaImporter(Document):
 		return not any(kw in text for kw in charge_kw)
 		
 	def _ensure_supplier(self, supplier_name):
-		"""Creates supplier if not exists"""
-		if not supplier_name: return
-		if not frappe.db.exists("Supplier", supplier_name):
-			# Get first available group
-			sup_group = frappe.db.get_value("Supplier Group", {}, "name") or "All Supplier Groups"
+		"""
+		Checks if supplier exists by name. 
+		If exists, returns its ID (name). 
+		If not, creates it and returns the new ID.
+		"""
+		if not supplier_name: return None
+		
+		# Check if supplier exists by supplier_name
+		existing_id = frappe.db.get_value("Supplier", {"supplier_name": supplier_name}, "name")
+		if existing_id:
+			return existing_id
 			
-			sup = frappe.new_doc("Supplier")
-			sup.supplier_name = supplier_name
-			sup.supplier_group = sup_group
-			sup.supplier_type = "Company"
-			sup.insert(ignore_permissions=True)
+		# Else create new
+		sup_group = frappe.db.get_value("Supplier Group", {}, "name") or "All Supplier Groups"
+		sup = frappe.new_doc("Supplier")
+		sup.supplier_name = supplier_name
+		sup.supplier_group = sup_group
+		sup.supplier_type = "Company"
+		sup.insert(ignore_permissions=True)
+		
+		return sup.name
 			
 	def _resolve_traveler(self, full_text, customer):
 		"""Splits MR/MRS prefix and creates traveler if missing"""
