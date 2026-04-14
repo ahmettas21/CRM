@@ -10,12 +10,17 @@ def fix_everything():
     except Exception as e:
         print(f"Yetki hatası: {e}")
 
-    # 2. Workspace (Menü) Sıfırlama
-    # Mevcut kaydı silelim ki dosyadaki yeni 'Standard' hali migrate ile temiz gelsin
+    # 2. Workspace (Menü) Sıfırlama ve Zorla Senkronizasyon
+    # Mevcut kaydı silelim ki dosyadaki yeni 'Standard' hali temiz gelsin
     ws_name = "Izge Travel"
     if frappe.db.exists("Workspace", ws_name):
         frappe.delete_doc("Workspace", ws_name, ignore_permissions=True, force=True)
         print(f"{ws_name} Workspace'i sıfırlandı.")
+    
+    # MODÜLÜ ZORLA SENKRONİZE ET (JSON -> DB)
+    from frappe.model.sync import sync_for
+    sync_for("izge_travel", force=True)
+    print("izge_travel modülü (Workspace dahil) zorla senkronize edildi.")
     
     frappe.db.commit()
     frappe.clear_cache()
