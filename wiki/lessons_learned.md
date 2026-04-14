@@ -1,12 +1,12 @@
-# 🧠 Ders Ã\u0087Ä±karÄ±lan Hatalar (Lessons Learned)
+# 🧠 Ders Çıkarılan Hatalar (Lessons Learned)
 
-## 🪆 MatruÅ\u015fka KlasÃ¶r TuzaÄ\u011fÄ± (AÄ\u011fustos 2026)
+## 🪆 [MEM-001] Matruşka Klasör Tuzağı (Ağustos 2026 Vak'ası)
 
 ### Sorun
-Uygulama sunucuya gÃ¶nderildiÄ\u011finde `hooks.py` dosyasÄ±nÄ±n bulunamamasÄ± (`ModuleNotFoundError`) ve sol panelin (sidebar) boÅ\u015f gÃ¶rÃ¼nmesi.
+Uygulama sunucuya gönderildiğinde `hooks.py` dosyasının bulunamaması (`ModuleNotFoundError`) ve sol panelin (sidebar) boş görünmesi.
 
-### KÃ¶k Neden
-KodlarÄ±n yereldeki dizin yapÄ±sÄ± (`CRM/izge_travel/izge_travel/izge_travel...`) ile Git repsounun birleÅ\u015fmesi sonucunda, sunucuda 4-5 kat derinliÄ\u011fe sahip bir yapı oluÅ\u015fmasÄ±. Frappe, Python import mantiÄ\u011fÄ± gereÄ\u011fi modÃ¼lÃ¼ (izge_travel) yÃ¼klerken en fazla 2 kat derinlikte `hooks.py` arar. Daha derindeyse sistemi kilitler.
+### Kök Neden
+Kodların yereldeki dizin yapısı (`CRM/izge_travel/izge_travel/izge_travel...`) ile Git repsounun birleşmesi sonucunda, sunucuda 4-5 kat derinliğe sahip bir yapı oluşması. Frappe, Python import mantığı gereği modülü (izge_travel) yüklerken en fazla 2 kat derinlikte `hooks.py` arar. Daha derindeyse sistemi kilitler.
 
 ### Ã\u0087Ã¶zÃ¼m (Forum & Saha OnaylÄ±)
 - Dizin yapÄ±sÄ±nÄ± **Frappe StandartlarÄ±na** indirge. (Bkz: [raw/frappe_structure.md](../raw/frappe_structure.md))

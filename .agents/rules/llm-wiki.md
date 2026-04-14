@@ -15,30 +15,30 @@ Bu doküman, herhangi bir yazılım projesini "kendi kendini belgeleyen ve hatal
 
 ## 2. Temel Kuralları (Core Rules)
 
-### ♊ İkiz Doküman (Twin Document Rule)
+### ♊ [RULE-001] İkiz Doküman (Twin Document Rule)
 
 Her yeni özellik veya kod bloğu hem `wiki/` (kavramsal özet) hem de `raw/` (teknik derinlik) katmanında eş zamanlı belgelenmelidir. **Öksüz kod (belgelenmemiş kod) yasaktır.**
 
-*   **⚠️ Hafıza Kaybı Yasağı (No Memory Loss):** Planlama dökümanları güncellenirken, önceki sürümlerde mutabık kalınan hiçbir vizyoner veya teknik detay (geçici olduğu belirtilmedikçe) silinemez. Güncellemeler her zaman **Kümülatif (birikimli)** olmalıdır. Yeni bir odak noktasına geçilmesi, eski bilgilerin silinmesini meşrulaştırmaz.
+*   **⚠️ [RULE-002] Hafıza Kaybı Yasağı (No Memory Loss):** Planlama dökümanları güncellenirken, önceki sürümlerde mutabık kalınan hiçbir vizyoner veya teknik detay (geçici olduğu belirtilmedikçe) silinemez. Güncellemeler her zaman **Kümülatif (birikimli)** olmalıdır. Yeni bir odak noktasına geçilmesi, eski bilgilerin silinmesini meşrulaştırmaz.
 
-### 🛑 "Asla Tahmin Etme" Zırhı (Self-Verification)
+### 🛑 [RULE-003] "Asla Tahmin Etme" Zırhı (Self-Verification)
 
 - Yapay zeka, sistemde olmayan bir şeyi biliyormuş gibi yapamaz.
 - Bir iddiayı doğrulamak için önce `wiki/` dizinini, sonra fiziksel dosya sistemini (`grep`/`ls`) taramalıdır.
 - Bilgi yoksa uydurmak yerine kullanıcıya sormalıdır.
 
-### 🛡️ Sandbox & Arşivleme (Anti-Clutter)
+### 🛡️ [RULE-004] Sandbox & Arşivleme (Anti-Clutter)
 
 - Kök dizin (Root) sadece ana operasyonel dosyaları barındırabilir.
 - Tüm denemeler, testler ve geçici dosyalar `tmp/` veya `denemeler/` içinde yapılmalıdır.
 - Başarılı olan testler arşivlenmeli, başarısızlar silinmelidir.
 
-### 🔗 Derin Bağlantı Standardı (Deep Dive)
+### 🔗 [RULE-005] Derin Bağlantı Standardı (Deep Dive)
 
 Wiki ile Raw arasındaki köprü her zaman şu formatta tıklanabilir linklerle kurulmalıdır:
 `> 🔗 **Derin Teknik Kök Neden (Deep Dive):** [raw/referans.md](../../raw/referans.md)`
 
-### 🚀 Mission Control (Niyet Takibi)
+### 🚀 [RULE-006] Mission Control (Niyet Takibi)
 
 `wiki/mission_control.md` üzerinden kullanıcının yüksek seviyeli hedefleri (Neden yapıyoruz?) ve tamamlanma durumları takip edilmelidir.
 
@@ -103,10 +103,11 @@ Detaylı açıklamalar için: `wiki/lessons_learned.md`
 4. **PowerShell'den SSH'e iç içe tırnak komutu gönderme** — Karakterler bozulur. **Daima base64 yöntemi** kullanılmalıdır.
 5. **Root ile dosya yazıp `chown` yapmadan bırakma** — `frappe` kullanıcısı erişemez, site çöker.
 6. **`bench migrate` çalıştırıp sonucu doğrulamadan "düzeldi" deme** — Doğrulama kontrol listesi (aşağıda) çalıştırılmalıdır.
-7. **Deployment Yolu (Zorunlu):** Kodlar GitHub'a push edildikten sonra sunucuya IP/Port ile değil, doğrudan `railway ssh -s erpnext --environment production` komutuyla bağlanılmalıdır. Karmaşık komutlar için daima PowerShell üzerinde `[Convert]::ToBase64String` ile sarmalama yapılmalıdır.
+7. **[RULE-007] Deployment Yolu (Zorunlu):** Kodlar GitHub'a push edildikten sonra sunucuya IP/Port ile değil, doğrudan `railway ssh -s erpnext --environment production` komutuyla bağlanılmalıdır. Karmaşık komutlar için daima PowerShell üzerinde `[Convert]::ToBase64String` ile sarmalama yapılmalıdır.
 8. **Kritik Konfigürasyon Koruması:** `site_config.json` veya `common_site_config.json` dosyalarındaki `db_host` ve `redis` adresleri asla manuel silinmemeli; silinirse `mariadb.railway.internal` ve `redis-cache.railway.internal` adresleri geri yazılmalıdır.
-9. **Matruşka Klasör Yasağı (Anti-Nesting):** Uygulama dosyaları asla `izge_travel/izge_travel/izge_travel/` gibi 3+ derinliğe gömülemez. İdeal yapı: `apps/APP_NAME/APP_NAME/` şeklindedir. Detay: [wiki/lessons_learned.md](../../wiki/lessons_learned.md)
-10. **Altın PIP Protokolü (Subfolder Rule):** Repo (CRM) içinde uygulama bir alt klasörde (`izge_travel/`) ise, kurulum daima `pip install -e ./izge_travel` şeklinde o klasörü hedef alarak yapılmalıdır. Aksi takdirde modül bulunamaz (ModuleNotFoundError). Teknik: [raw/frappe_structure.md](../../raw/frappe_structure.md)
+9. **[RULE-008] Matruşka Klasör Yasağı (Anti-Nesting):** Uygulama dosyaları asla `izge_travel/izge_travel/izge_travel/` gibi 3+ derinliğe gömülemez. İdeal yapı: `apps/APP_NAME/APP_NAME/` şeklindedir. Detay: [wiki/lessons_learned.md](../../wiki/lessons_learned.md)
+10. **[RULE-009] Altın PIP Protokolü (Subfolder Rule):** Repo (CRM) içinde uygulama bir alt klasörde (`izge_travel/`) ise, kurulum daima `pip install -e ./izge_travel` şeklinde o klasörü hedef alarak yapılmalıdır. Aksi takdirde modül bulunamaz (ModuleNotFoundError). Teknik: [raw/frappe_structure.md](../../raw/frappe_structure.md)
+11. **[RULE-010] Benzersiz Kimlik Protokolü (Unique ID Protocol):** Her yeni kural veya hafıza öğesi mutlaka benzersiz bir ID ([RULE-XXX] veya [MEM-XXX]) ile etiketlenmelidir. Bu ID'ler `raw/id_map.md` üzerinden takip edilmelidir.
 
 ## 5. ✅ Zorunlu Doğrulama (Post-Deploy Checklist)
 
