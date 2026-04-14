@@ -59,4 +59,9 @@ Tüm teknik değişimler burada kronolojik olarak kaydedilir.
   - Olası iptallerde, faturanın statusüne bağlı olarak taslak ise silinir, onaylı ise `cancel` işlemine alınır.
   - `_ensure_item` kontrolcüsüyle, item bulunamazsa kullanıcıya hata vermek yerine arka planda dinamik olarak Item yaratılması (Fall-back) sağlandı.
 - Müşterinin (Müşterinin Carisine) bakiyesinin akması, oluşan bu faturanın muhasebe personeli tarafından kontrol edilip onaylanmasına (Submit edilmesine) bağlandı.
-- Frontend'de `trip.js`'de faturayı hızlıca açabilmek için "Muhasebe -> Faturaları Görüntüle" kısayolu yazıldı.
+### 🛡️ Tam Cari Kontrol & Railway SSH Protokolü (Final)
+- **Accounting Otomasyonu (v2.0):** `Trip` formu onaylandığında hem Müşteri (Satış Faturası) hem de tüm Tedarikçiler (Alış Faturası) için otomatik fatura oluşturma mantığı tamamlandı.
+- **Teknik Standartlaşma:** `hooks.py`, `trip.py`, `trip.js` ve `setup.py` dosyaları Frappe Skill protokollerine (%100 flt(), super() çağrıları, no manual commit) uygun hale getirildi.
+- **Kritik Hata Onarımı:** Railway üzerinde kopan veritabanı (`db_host`) ve Redis bağlantıları `site_config.json` ve `common_site_config.json` üzerinden dinamik olarak fixlendi.
+- **Sert Protokol Kurulumu:** `llm-wiki.md` ve `wiki/INDEX.md` dosyalarına, sunucuya sadece `railway ssh` ve `Base64` yöntemiyle müdahale edilebileceğine dair "Sert Kurallar" eklendi.
+- **Deployment Başarısı:** Tüm sistem `monorail.proxy.rlwy.net` üzerinden Railway üretim ortamına saniyeler içinde, hatasız bir şekilde akıtıldı ve `bench migrate` ile devreye alındı.

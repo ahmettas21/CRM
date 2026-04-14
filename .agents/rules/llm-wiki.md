@@ -103,6 +103,10 @@ Detaylı açıklamalar için: `wiki/lessons_learned.md`
 4. **PowerShell'den SSH'e iç içe tırnak komutu gönderme** — Karakterler bozulur. **Daima base64 yöntemi** kullanılmalıdır.
 5. **Root ile dosya yazıp `chown` yapmadan bırakma** — `frappe` kullanıcısı erişemez, site çöker.
 6. **`bench migrate` çalıştırıp sonucu doğrulamadan "düzeldi" deme** — Doğrulama kontrol listesi (aşağıda) çalıştırılmalıdır.
+7. **Deployment Yolu (Zorunlu):** Kodlar GitHub'a push edildikten sonra sunucuya IP/Port ile değil, doğrudan `railway ssh -s erpnext --environment production` komutuyla bağlanılmalıdır. Karmaşık komutlar için daima PowerShell üzerinde `[Convert]::ToBase64String` ile sarmalama yapılmalıdır.
+8. **Kritik Konfigürasyon Koruması:** `site_config.json` veya `common_site_config.json` dosyalarındaki `db_host` ve `redis` adresleri asla manuel silinmemeli; silinirse `mariadb.railway.internal` ve `redis-cache.railway.internal` adresleri geri yazılmalıdır.
+9. **Matruşka Klasör Yasağı (Anti-Nesting):** Uygulama dosyaları asla `izge_travel/izge_travel/izge_travel/` gibi 3+ derinliğe gömülemez. İdeal yapı: `apps/APP_NAME/APP_NAME/` şeklindedir. Detay: [wiki/lessons_learned.md](../../wiki/lessons_learned.md)
+10. **Altın PIP Protokolü (Subfolder Rule):** Repo (CRM) içinde uygulama bir alt klasörde (`izge_travel/`) ise, kurulum daima `pip install -e ./izge_travel` şeklinde o klasörü hedef alarak yapılmalıdır. Aksi takdirde modül bulunamaz (ModuleNotFoundError). Teknik: [raw/frappe_structure.md](../../raw/frappe_structure.md)
 
 ## 5. ✅ Zorunlu Doğrulama (Post-Deploy Checklist)
 
