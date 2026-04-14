@@ -33,4 +33,8 @@ def after_migrate():
 			buying_settings.save(ignore_permissions=True)
 
 	frappe.db.commit()
+
+	from izge_travel.izge_travel.setup_items_taxes import setup_all
+	setup_all()
+
 	frappe.logger("izge_travel").info("Custom Naming Series configured successfully.")

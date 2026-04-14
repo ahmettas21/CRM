@@ -44,3 +44,10 @@ Tüm teknik değişimler burada kronolojik olarak kaydedilir.
 - Standart `Selling Settings` ve `Buying Settings` üzerinden adlandırma kuralı `Naming Series`'e çekildi.
 - `Property Setter` kurgusu ile Customer serisine `M-.YYYY.-.####`, Supplier serisine `T-.YYYY.-.####` şablonu atandı.
 - Tüm bu güncellemelerin sisteme `bench migrate` sonrasında (after_migrate) otomatik entegre olması için `hooks.py` kancası `/setup.py` dosyasına bağlandı.
+
+### 📦 Hizmet ve Satış Kalemleri (Items & Item Groups) Yapılandırması
+- İzge Travel biletleme ve operasyonlarında kullanılacak ana Item ürünleri oluşturuldu.
+- **Gruplar:** `Uçak Bileti`, `Otel`, `Vize`, `Hizmet Bedeli`, `Vergi ve Harçlar`
+- **Kalemler (Items):** Yurt İçi Uçak, Yurt Dışı Uçak, Havalimanı Vergisi, Acente Komisyonu (Gelir/Gider).
+- *Teknik Not:* Vergi şablonları (Tax Templates) doğrudan Hesap Planı'ndaki (Chart of Accounts) KDV hesaplarına (191/391) "Account" bağımlılığı içerdiği için Python tarafında kodlanması ertelendi. Bu kurgu şirket kurulumundan sonra arayüzden veya ayrı bir aktarım ile yapılacaktır.
+- Betik `setup_items_taxes.py` olarak yazıldı ve ana setup kancasına eklendi.
