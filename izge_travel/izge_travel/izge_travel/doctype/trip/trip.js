@@ -3,12 +3,17 @@
 
 frappe.ui.form.on('Trip', {
 	refresh(frm) {
-		// Finansal toplamlar read-only ve otomatik hesaplanır
-		// Yeni kayıt değilse ve onaylanmışsa fatura oluşturma butonu ekle
-		if (!frm.is_new() && frm.doc.status !== 'Cancelled' && frm.doc.status !== 'Draft') {
-			frm.add_custom_button(__('Create Sales Invoice'), () => {
-				frappe.msgprint(__('Sales Invoice oluşturma henüz aktif değil.'));
-			}, __('Create'));
+		// Calculate totals on refresh if needed (usually handled by events)
+		calculate_parent_totals(frm);
+
+		// İşlem iptal edilmemişse ve Onaylanmışsa arka planda fatura oluşmuştur. Faturayı görüntüle butonu
+		if (frm.doc.docstatus === 1) {
+			frm.add_custom_button(__('Faturaları Görüntüle'), () => {
+				frappe.route_options = {
+					"remarks": ["like", "%Auto-generated from Trip: " + frm.doc.name + "%"]
+				};
+				frappe.set_route("List", "Sales Invoice");
+			}, __('Muhasebe'));
 		}
 	},
 

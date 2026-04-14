@@ -51,3 +51,12 @@ Tüm teknik değişimler burada kronolojik olarak kaydedilir.
 - **Kalemler (Items):** Yurt İçi Uçak, Yurt Dışı Uçak, Havalimanı Vergisi, Acente Komisyonu (Gelir/Gider).
 - *Teknik Not:* Vergi şablonları (Tax Templates) doğrudan Hesap Planı'ndaki (Chart of Accounts) KDV hesaplarına (191/391) "Account" bağımlılığı içerdiği için Python tarafında kodlanması ertelendi. Bu kurgu şirket kurulumundan sonra arayüzden veya ayrı bir aktarım ile yapılacaktır.
 - Betik `setup_items_taxes.py` olarak yazıldı ve ana setup kancasına eklendi.
+
+### 🧾 Trip & Satış Faturası (Sales Invoice) Entegrasyonu
+- Operasyonlardan gelen müşteri bakiyesi istekleri doğrultusunda **Otomatik Taslak Fatura** kurgusu uygulandı.
+- `trip.py` içerisinde `on_submit` ve `on_cancel` kancaları aktifleştirildi.
+  - Biletçi (Acente çalışanı) bir formu `Submit` ettiği an arka planda **Draft (Taslak)** statüsünde Sales Invoice oluşur.
+  - Olası iptallerde, faturanın statusüne bağlı olarak taslak ise silinir, onaylı ise `cancel` işlemine alınır.
+  - `_ensure_item` kontrolcüsüyle, item bulunamazsa kullanıcıya hata vermek yerine arka planda dinamik olarak Item yaratılması (Fall-back) sağlandı.
+- Müşterinin (Müşterinin Carisine) bakiyesinin akması, oluşan bu faturanın muhasebe personeli tarafından kontrol edilip onaylanmasına (Submit edilmesine) bağlandı.
+- Frontend'de `trip.js`'de faturayı hızlıca açabilmek için "Muhasebe -> Faturaları Görüntüle" kısayolu yazıldı.
