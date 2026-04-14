@@ -28,3 +28,13 @@ Tüm teknik değişimler burada kronolojik olarak kaydedilir.
     - `Traveler Emergency Contact` (Acil durum kişileri - Child Table)
 - Python validasyonları (`passport_expiry`, `return_date` kontrolü vb.) yazıldı.
 - GitHub (`ahmettas21/CRM`) üzerinden üretim ortamına senkronizasyon ve `bench migrate` başarılı.
+
+### 💰 Muhasebe ve Finansal Altyapı
+- İzge Turizm için "Ana Satıcı (Principal - Model B)" muhasebe kurgusu kararlaştırıldı.
+- `muhasebekonusması.md` içerisindeki tüm detaylar (TDHP kodları, KDV şablonları, POS akışları, iade senaryoları) kümülatif ve kesintisiz şekilde `muhasebe_uygulama_plani.md` (v2.0) Master Planına aktarıldı.
+- Hafıza kaybını önlemek için `.agents/rules/llm-wiki.md` dosyasına "Hafıza Kaybı Yasağı" (No Memory Loss) kuralı eklendi.
+
+### 💻 Trip UI Geliştirmeleri (Client Script)
+- `Trip` DocType'ı ve 4 adet Child Table (`Trip Flight Segment`, `Trip Hotel Stay`, `Trip Service Item`, `Trip Charge`) için finansal hesaplama scripti (`trip.js`) yazıldı.
+- `Frappe Client Script Skill` referans alınarak; `frm.doc` yerine `frappe.model.set_value()` kullanıldı ve anlık `Sale Amount` ile `Profit` hesaplamaları eklendi.
+- Kod çevrimiçi ortama (Railway) `git push` üzerinden başarıyla entegre edildi.
