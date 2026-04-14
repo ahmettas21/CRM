@@ -38,3 +38,9 @@ Tüm teknik değişimler burada kronolojik olarak kaydedilir.
 - `Trip` DocType'ı ve 4 adet Child Table (`Trip Flight Segment`, `Trip Hotel Stay`, `Trip Service Item`, `Trip Charge`) için finansal hesaplama scripti (`trip.js`) yazıldı.
 - `Frappe Client Script Skill` referans alınarak; `frm.doc` yerine `frappe.model.set_value()` kullanıldı ve anlık `Sale Amount` ile `Profit` hesaplamaları eklendi.
 - Kod çevrimiçi ortama (Railway) `git push` üzerinden başarıyla entegre edildi.
+
+### 🏭 Cari Kart Yapılandırması (Customer & Supplier)
+- Müşteri (Customer) ve Tedarikçi (Supplier) DocType'ları için Standart Frappe Core ayarları kod tabanlı (Patch/Setup Script) olarak yapılandırıldı.
+- Standart `Selling Settings` ve `Buying Settings` üzerinden adlandırma kuralı `Naming Series`'e çekildi.
+- `Property Setter` kurgusu ile Customer serisine `M-.YYYY.-.####`, Supplier serisine `T-.YYYY.-.####` şablonu atandı.
+- Tüm bu güncellemelerin sisteme `bench migrate` sonrasında (after_migrate) otomatik entegre olması için `hooks.py` kancası `/setup.py` dosyasına bağlandı.
