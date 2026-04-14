@@ -84,6 +84,7 @@ app_license = "mit"
 
 # before_install = "izge_travel.install.before_install"
 # after_install = "izge_travel.install.after_install"
+after_migrate = "izge_travel.setup.after_migrate"
 
 # Uninstallation
 # ------------
