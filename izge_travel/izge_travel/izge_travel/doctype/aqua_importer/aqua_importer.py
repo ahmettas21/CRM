@@ -285,9 +285,12 @@ class AquaImporter(Document):
 		"""Creates supplier if not exists"""
 		if not supplier_name: return
 		if not frappe.db.exists("Supplier", supplier_name):
+			# Get first available group
+			sup_group = frappe.db.get_value("Supplier Group", {}, "name") or "All Supplier Groups"
+			
 			sup = frappe.new_doc("Supplier")
 			sup.supplier_name = supplier_name
-			sup.supplier_group = "All Supplier Groups"
+			sup.supplier_group = sup_group
 			sup.supplier_type = "Company"
 			sup.insert(ignore_permissions=True)
 			
