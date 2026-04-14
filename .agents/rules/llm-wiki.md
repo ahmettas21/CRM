@@ -19,6 +19,8 @@ Bu doküman, herhangi bir yazılım projesini "kendi kendini belgeleyen ve hatal
 
 Her yeni özellik veya kod bloğu hem `wiki/` (kavramsal özet) hem de `raw/` (teknik derinlik) katmanında eş zamanlı belgelenmelidir. **Öksüz kod (belgelenmemiş kod) yasaktır.**
 
+*   **⚠️ Hafıza Kaybı Yasağı (No Memory Loss):** Planlama dökümanları güncellenirken, önceki sürümlerde mutabık kalınan hiçbir vizyoner veya teknik detay (geçici olduğu belirtilmedikçe) silinemez. Güncellemeler her zaman **Kümülatif (birikimli)** olmalıdır. Yeni bir odak noktasına geçilmesi, eski bilgilerin silinmesini meşrulaştırmaz.
+
 ### 🛑 "Asla Tahmin Etme" Zırhı (Self-Verification)
 
 - Yapay zeka, sistemde olmayan bir şeyi biliyormuş gibi yapamaz.
