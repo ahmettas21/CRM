@@ -40,6 +40,7 @@ def after_migrate():
 	setup_all()
 
 	setup_suppliers()
+	setup_payment_terms()
 
 	frappe.logger("izge_travel").info("Custom configuration completed successfully.")
 
@@ -62,7 +63,73 @@ def setup_suppliers():
 				"supplier_type": "Company"
 			})
 			sup.insert(ignore_permissions=True)
-			# Manual commit removed per Frappe Best Practices
+
+def setup_payment_terms():
+	"""
+	Create Payment Terms Templates for Izge Travel:
+	- Peşin (Anında)
+	- 7 Gün Vade
+	- 15 Gün Vade
+	- 30 Gün Vade
+	- 45 Gün Vade
+	- Devre Vade (1-15 → diğer ayın 1'i, 15-30 → diğer ayın 15'i)
+	"""
+	templates = [
+		{
+			"name": "Peşin",
+			"terms": [{"payment_term": "Peşin Ödeme", "invoice_portion": 100, "credit_days": 0}]
+		},
+		{
+			"name": "7 Gün Vade",
+			"terms": [{"payment_term": "7 Gün", "invoice_portion": 100, "credit_days": 7}]
+		},
+		{
+			"name": "15 Gün Vade",
+			"terms": [{"payment_term": "15 Gün", "invoice_portion": 100, "credit_days": 15}]
+		},
+		{
+			"name": "30 Gün Vade",
+			"terms": [{"payment_term": "30 Gün", "invoice_portion": 100, "credit_days": 30}]
+		},
+		{
+			"name": "45 Gün Vade",
+			"terms": [{"payment_term": "45 Gün", "invoice_portion": 100, "credit_days": 45}]
+		},
+		{
+			"name": "Devre Vade (1-15 Ayın 1i)",
+			"terms": [{"payment_term": "Devre 1-15", "invoice_portion": 100, "credit_days_based_on": "Day(s) after invoice date", "credit_days": 30}]
+		},
+		{
+			"name": "Devre Vade (15-30 Ayın 15i)",
+			"terms": [{"payment_term": "Devre 15-30", "invoice_portion": 100, "credit_days_based_on": "Day(s) after invoice date", "credit_days": 30}]
+		}
+	]
+	
+	for tmpl in templates:
+		if not frappe.db.exists("Payment Terms Template", tmpl["name"]):
+			pt = frappe.new_doc("Payment Terms Template")
+			pt.template_name = tmpl["name"]
+			
+			for term in tmpl["terms"]:
+				# First ensure Payment Term exists
+				term_name = term.pop("payment_term")
+				if not frappe.db.exists("Payment Term", term_name):
+					pt_term = frappe.new_doc("Payment Term")
+					pt_term.payment_term_name = term_name
+					pt_term.invoice_portion = term.get("invoice_portion", 100)
+					pt_term.credit_days = term.get("credit_days", 0)
+					pt_term.insert(ignore_permissions=True)
+				
+				pt.append("terms", {
+					"payment_term": term_name,
+					"invoice_portion": term.get("invoice_portion", 100),
+					"credit_days": term.get("credit_days", 0)
+				})
+			
+			pt.insert(ignore_permissions=True)
+			frappe.logger("izge_travel").info(f"Payment Terms Template '{tmpl['name']}' created.")
+	
+	frappe.db.commit()
 
 def setup_naming_series_field(doctype, default_series):
 	"""Manually add naming_series field if missing and set options."""

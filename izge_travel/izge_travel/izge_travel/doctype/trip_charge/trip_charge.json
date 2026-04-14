@@ -7,7 +7,9 @@
  "field_order": [
   "charge_type",
   "description",
+  "supplier",
   "cost_amount",
+  "tax_amount",
   "service_amount",
   "extra_amount",
   "sale_amount",
@@ -20,7 +22,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Charge Type",
-   "options": "\nSeat\nCIP\nBundle\nBaggage\nTransfer\nOther",
+   "options": "\nSeat\nCIP\nBundle\nBaggage\nTransfer\nPenalty\nReissue Fee\nOther",
    "reqd": 1
   },
   {
@@ -30,9 +32,21 @@
    "label": "Description"
   },
   {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Supplier",
+   "options": "Supplier"
+  },
+  {
    "fieldname": "cost_amount",
    "fieldtype": "Currency",
    "label": "Cost Amount"
+  },
+  {
+   "fieldname": "tax_amount",
+   "fieldtype": "Currency",
+   "label": "Tax Amount"
   },
   {
    "fieldname": "service_amount",
@@ -68,7 +82,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-04-14 03:45:00.000000",
+ "modified": "2026-04-15 00:45:00.000000",
  "modified_by": "Administrator",
  "module": "Izge Travel",
  "name": "Trip Charge",

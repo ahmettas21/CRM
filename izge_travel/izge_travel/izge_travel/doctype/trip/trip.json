@@ -5,6 +5,7 @@
  "creation": "2026-04-14 00:20:00.000000",
  "doctype": "DocType",
  "engine": "InnoDB",
+ "is_submittable": 1,
  "field_order": [
   "naming_series",
   "booking_reference",
@@ -32,10 +33,20 @@
   "total_tax_amount",
   "service_fee_display",
   "currency",
+  "section_payment",
+  "payment_method",
+  "payment_status",
+  "column_break_pay",
+  "payment_due_date",
+  "payment_terms_template",
+  "cc_bank",
+  "cc_commission_rate",
+  "cc_commission_amount",
   "section_invoicing",
   "customer_invoice_no",
   "column_break_inv",
   "supplier_invoice_no",
+  "amended_from",
   "section_segments",
   "trip_flight_segments",
   "section_hotels",
@@ -111,7 +122,7 @@
    "fieldtype": "Select",
    "in_standard_filter": 1,
    "label": "Product Type",
-   "options": "\nFlight\nHotel\nTransfer\nTrain\nOther"
+   "options": "\nFlight\nHotel\nTransfer\nTrain\nVisa\nTour\nPackage\nOther"
   },
   {
    "fieldname": "trip_scope",
@@ -131,7 +142,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Draft\nNormal\nConfirmed\nCompleted\nCancelled\nRefunded",
+   "options": "Draft\nNormal\nConfirmed\nCompleted\nCancelled\nRefunded\nVoid\nReissued",
    "reqd": 1
   },
   {
@@ -220,6 +231,64 @@
    "default": "TRY"
   },
   {
+   "fieldname": "section_payment",
+   "fieldtype": "Section Break",
+   "label": "Payment & Billing"
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "Payment Method",
+   "in_list_view": 1,
+   "options": "\nCash\nCredit Card\nBank Transfer\nCredit (Vadeli)\nSplit"
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "Unpaid\nPartially Paid\nPaid",
+   "default": "Unpaid",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_pay",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "payment_due_date",
+   "fieldtype": "Date",
+   "label": "Payment Due Date"
+  },
+  {
+   "fieldname": "payment_terms_template",
+   "fieldtype": "Link",
+   "label": "Payment Terms",
+   "options": "Payment Terms Template"
+  },
+  {
+   "fieldname": "cc_bank",
+   "fieldtype": "Select",
+   "label": "Credit Card Bank",
+   "options": "\nGaranti BBVA\nİş Bankası\nYapı Kredi\nAkbank\nZiraat Bankası\nHalkbank\nVakıfbank\nQNB Finansbank\nDenizbank\nTEB\nDiğer",
+   "depends_on": "eval:doc.payment_method=='Credit Card'"
+  },
+  {
+   "fieldname": "cc_commission_rate",
+   "fieldtype": "Percent",
+   "label": "CC Commission Rate (%)",
+   "default": "2.5",
+   "depends_on": "eval:doc.payment_method=='Credit Card'"
+  },
+  {
+   "fieldname": "cc_commission_amount",
+   "fieldtype": "Currency",
+   "label": "CC Commission Amount",
+   "options": "currency",
+   "read_only": 1,
+   "depends_on": "eval:doc.payment_method=='Credit Card'"
+  },
+  {
    "fieldname": "section_invoicing",
    "fieldtype": "Section Break",
    "label": "Invoice References",
@@ -238,6 +307,16 @@
    "fieldname": "supplier_invoice_no",
    "fieldtype": "Data",
    "label": "Supplier Invoice No"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Trip",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "section_segments",
@@ -289,7 +368,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-04-14 03:45:00.000000",
+ "modified": "2026-04-15 00:45:00.000000",
  "modified_by": "Administrator",
  "module": "Izge Travel",
  "name": "Trip",
@@ -306,6 +385,9 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
    "write": 1
   }
  ],

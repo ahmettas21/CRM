@@ -2,9 +2,155 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Trip', {
+	setup(frm) {
+		// Quick filters for linked fields
+		frm.set_query("primary_traveler", function() {
+			return { filters: { customer: frm.doc.customer } };
+		});
+	},
+
 	refresh(frm) {
 		calculate_parent_totals(frm);
 
+		// ═══════════════════════════════════════════
+		// PRATİK EKRAN: Custom Buttons & Quick Actions
+		// ═══════════════════════════════════════════
+
+		// Quick Customer Creation Button (before submit)
+		if (frm.doc.docstatus === 0) {
+			frm.add_custom_button(__('Yeni Müşteri'), () => {
+				let d = new frappe.ui.Dialog({
+					title: 'Hızlı Müşteri Oluştur',
+					fields: [
+						{ fieldname: 'customer_name', fieldtype: 'Data', label: 'Müşteri Adı', reqd: 1 },
+						{ fieldname: 'customer_type', fieldtype: 'Select', label: 'Tür',
+						  options: 'Company\nIndividual', default: 'Individual' },
+						{ fieldname: 'mobile_no', fieldtype: 'Data', label: 'Telefon' },
+						{ fieldname: 'email_id', fieldtype: 'Data', label: 'E-posta', options: 'Email' }
+					],
+					primary_action_label: 'Oluştur',
+					primary_action(values) {
+						frappe.call({
+							method: 'frappe.client.insert',
+							args: {
+								doc: {
+									doctype: 'Customer',
+									customer_name: values.customer_name,
+									customer_type: values.customer_type,
+									customer_group: 'Commercial',
+									territory: 'All Territories',
+									mobile_no: values.mobile_no,
+									email_id: values.email_id
+								}
+							},
+							callback(r) {
+								if (r.message) {
+									frm.set_value('customer', r.message.name);
+									frappe.show_alert({message: __('Müşteri oluşturuldu: ') + r.message.name, indicator: 'green'});
+									d.hide();
+								}
+							}
+						});
+					}
+				});
+				d.show();
+			}, __('Hızlı İşlemler'));
+
+			// Quick Traveler Creation
+			frm.add_custom_button(__('Yeni Yolcu'), () => {
+				if (!frm.doc.customer) {
+					frappe.msgprint(__('Önce müşteri seçiniz.'));
+					return;
+				}
+				let d = new frappe.ui.Dialog({
+					title: 'Hızlı Yolcu Oluştur',
+					fields: [
+						{ fieldname: 'title_prefix', fieldtype: 'Select', label: 'Ünvan',
+						  options: '\nMR\nMRS\nCHD\nINF', default: 'MR' },
+						{ fieldname: 'full_name', fieldtype: 'Data', label: 'Ad Soyad', reqd: 1 },
+						{ fieldname: 'mobile_phone', fieldtype: 'Data', label: 'Telefon' },
+						{ fieldname: 'email', fieldtype: 'Data', label: 'E-posta', options: 'Email' },
+						{ fieldname: 'passport_number', fieldtype: 'Data', label: 'Pasaport No' },
+						{ fieldname: 'passport_expiry_date', fieldtype: 'Date', label: 'Pasaport Bitiş' },
+						{ fieldname: 'date_of_birth', fieldtype: 'Date', label: 'Doğum Tarihi' },
+						{ fieldname: 'nationality', fieldtype: 'Link', label: 'Uyruk', options: 'Country', default: 'Turkey' }
+					],
+					primary_action_label: 'Oluştur',
+					primary_action(values) {
+						frappe.call({
+							method: 'frappe.client.insert',
+							args: {
+								doc: {
+									doctype: 'Traveler',
+									customer: frm.doc.customer,
+									...values
+								}
+							},
+							callback(r) {
+								if (r.message) {
+									if (!frm.doc.primary_traveler) {
+										frm.set_value('primary_traveler', r.message.name);
+									}
+									frappe.show_alert({message: __('Yolcu oluşturuldu: ') + r.message.full_name, indicator: 'green'});
+									d.hide();
+								}
+							}
+						});
+					}
+				});
+				d.show();
+			}, __('Hızlı İşlemler'));
+
+			// Quick Flight Segment Add
+			frm.add_custom_button(__('Uçuş Ekle'), () => {
+				let d = new frappe.ui.Dialog({
+					title: 'Hızlı Uçuş Segmenti',
+					fields: [
+						{ fieldname: 'traveler', fieldtype: 'Link', label: 'Yolcu', options: 'Traveler',
+						  get_query: () => ({ filters: { customer: frm.doc.customer } }) },
+						{ fieldname: 'direction', fieldtype: 'Select', label: 'Yön',
+						  options: 'Outbound\nReturn', default: 'Outbound', reqd: 1 },
+						{ fieldname: 'cb1', fieldtype: 'Column Break' },
+						{ fieldname: 'origin', fieldtype: 'Data', label: 'Nereden (IATA)', reqd: 1 },
+						{ fieldname: 'destination', fieldtype: 'Data', label: 'Nereye (IATA)', reqd: 1 },
+						{ fieldname: 'sb1', fieldtype: 'Section Break', label: 'Uçuş Detayları' },
+						{ fieldname: 'airline', fieldtype: 'Data', label: 'Havayolu' },
+						{ fieldname: 'flight_no', fieldtype: 'Data', label: 'Uçuş No' },
+						{ fieldname: 'departure_date', fieldtype: 'Date', label: 'Uçuş Tarihi', reqd: 1 },
+						{ fieldname: 'cb2', fieldtype: 'Column Break' },
+						{ fieldname: 'departure_time', fieldtype: 'Time', label: 'Kalkış' },
+						{ fieldname: 'arrival_time', fieldtype: 'Time', label: 'İniş' },
+						{ fieldname: 'ticket_no', fieldtype: 'Data', label: 'Bilet No' },
+						{ fieldname: 'sb2', fieldtype: 'Section Break', label: 'Finansal' },
+						{ fieldname: 'supplier', fieldtype: 'Link', label: 'Tedarikçi', options: 'Supplier' },
+						{ fieldname: 'cost_amount', fieldtype: 'Currency', label: 'Maliyet', default: 0 },
+						{ fieldname: 'cb3', fieldtype: 'Column Break' },
+						{ fieldname: 'service_amount', fieldtype: 'Currency', label: 'Hizmet Bedeli', default: 0 },
+						{ fieldname: 'extra_amount', fieldtype: 'Currency', label: 'Ekstra', default: 0 }
+					],
+					size: 'large',
+					primary_action_label: 'Ekle',
+					primary_action(values) {
+						let sale = flt(values.cost_amount) + flt(values.service_amount) + flt(values.extra_amount);
+						let tax = flt(values.service_amount) > 0 ? flt(Math.round((flt(values.service_amount) / 1.20) * 0.20 * 100) / 100) : 0;
+						let row = frm.add_child('trip_flight_segments', {
+							...values,
+							sale_amount: sale,
+							tax_amount: tax
+						});
+						frm.refresh_field('trip_flight_segments');
+						calculate_parent_totals(frm);
+						frappe.show_alert({message: __('Uçuş segmenti eklendi'), indicator: 'green'});
+						d.hide();
+					}
+				});
+				d.show();
+			}, __('Hızlı İşlemler'));
+		}
+
+		// ═══════════════════════════════════════════
+		// SUBMITTED STATE: Accounting Buttons
+		// ═══════════════════════════════════════════
 		if (frm.doc.docstatus === 1) {
 			frm.add_custom_button(__('Satış Faturaları'), () => {
 				frappe.set_route("List", "Sales Invoice", {
@@ -17,15 +163,70 @@ frappe.ui.form.on('Trip', {
 					"remarks": ["like", "%" + (frm.doc.booking_reference || frm.doc.name) + "%"]
 				});
 			}, __('Muhasebe'));
+
+			frm.add_custom_button(__('Payment Entry'), () => {
+				frappe.model.open_mapped_doc({
+					method: "erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry",
+					frm: frm,
+					source_doctype: "Sales Invoice",
+					args: {
+						"dt": "Sales Invoice",
+						"dn": frm.doc.customer_invoice_no
+					}
+				});
+			}, __('Muhasebe'));
+		}
+
+		// ═══════════════════════════════════════════
+		// VISUAL INDICATORS
+		// ═══════════════════════════════════════════
+		if (frm.doc.profit < 0 && frm.doc.total_sale_amount > 0) {
+			frm.dashboard.set_headline(
+				__('<span style="color:red; font-weight:bold;">⚠️ DİKKAT: Bu trip zararda! Kâr: {0}</span>', [format_currency(frm.doc.profit, frm.doc.currency)])
+			);
+		} else if (frm.doc.profit > 0) {
+			frm.dashboard.set_headline(
+				__('<span style="color:green;">✅ Kâr: {0} | Marj: {1}%</span>', [
+					format_currency(frm.doc.profit, frm.doc.currency),
+					(frm.doc.total_sale_amount > 0 ? ((frm.doc.profit / frm.doc.total_sale_amount) * 100).toFixed(1) : 0)
+				])
+			);
 		}
 	},
 
+	// Auto-set booking date to today
+	customer(frm) {
+		if (frm.doc.customer && !frm.doc.booking_date) {
+			frm.set_value('booking_date', frappe.datetime.get_today());
+		}
+	},
+
+	// Auto-set product type based on child tables
 	validate(frm) {
 		calculate_parent_totals(frm);
+		
+		// Auto-detect product type
+		if (!frm.doc.product_type) {
+			let has_flight = (frm.doc.trip_flight_segments || []).length > 0;
+			let has_hotel = (frm.doc.trip_hotel_stays || []).length > 0;
+			if (has_flight && has_hotel) frm.set_value('product_type', 'Package');
+			else if (has_flight) frm.set_value('product_type', 'Flight');
+			else if (has_hotel) frm.set_value('product_type', 'Hotel');
+		}
+	},
+
+	// CC Commission auto-calculate
+	payment_method(frm) {
+		calculate_cc_commission(frm);
+	},
+	cc_commission_rate(frm) {
+		calculate_cc_commission(frm);
 	}
 });
 
-// --- Child Table Calculation Logic ---
+// ═══════════════════════════════════════════
+// CHILD TABLE EVENT HANDLERS
+// ═══════════════════════════════════════════
 const tables = ['Trip Flight Segment', 'Trip Hotel Stay', 'Trip Service Item', 'Trip Charge'];
 
 tables.forEach(table => {
@@ -48,17 +249,20 @@ tables.forEach(table => {
 	frappe.ui.form.on('Trip', removal_handler);
 });
 
+// ═══════════════════════════════════════════
+// CALCULATION FUNCTIONS
+// ═══════════════════════════════════════════
 function calculate_row_sale(frm, cdt, cdn, triggered_field) {
 	let row = frappe.get_doc(cdt, cdn);
 	let cost = flt(row.cost_amount);
 	let service = flt(row.service_amount);
 	let extra = flt(row.extra_amount);
 	
-	// 1. Calculate main sale amount (Sale = Cost + Service + Extra)
+	// Sale = Cost + Service + Extra
 	let sale = flt(cost + service + extra);
 	frappe.model.set_value(cdt, cdn, 'sale_amount', sale);
 
-	// 2. Auto-calc Tax from Service Fee (20% VAT)
+	// Auto-calc Tax from Service Fee (20% VAT included)
 	if (triggered_field === 'service_amount' && service > 0) {
 		let tax = flt(Math.round((service / 1.20) * 0.20 * 100) / 100);
 		frappe.model.set_value(cdt, cdn, 'tax_amount', tax);
@@ -94,5 +298,15 @@ function calculate_parent_totals(frm) {
 		total_tax_amount: total_tax,
 		profit: flt(total_sale - total_cost)
 	});
+
+	calculate_cc_commission(frm);
 }
 
+function calculate_cc_commission(frm) {
+	if (frm.doc.payment_method === 'Credit Card' && flt(frm.doc.cc_commission_rate) > 0) {
+		let comm = flt(frm.doc.total_sale_amount * flt(frm.doc.cc_commission_rate) / 100, 2);
+		frm.set_value('cc_commission_amount', comm);
+	} else {
+		frm.set_value('cc_commission_amount', 0);
+	}
+}
