@@ -38,14 +38,18 @@ class Trip(Document):
 		if getattr(self, "customer", None):
 			self.create_sales_invoice()
 		
+		# Full Cari Control: Create Purchase Invoices for Suppliers
+		self.create_purchase_invoices()
+		
 	def on_cancel(self):
 		self.cancel_sales_invoice()
+		self.cancel_purchase_invoices()
 
 	def create_sales_invoice(self):
 		"""Create a draft Sales Invoice pulling financial data from Trip."""
 		si = frappe.new_doc("Sales Invoice")
 		si.customer = self.customer
-		si.remarks = f"Auto-generated from Trip: {self.name}"
+		si.remarks = f"Booking Ref: {self.booking_reference or 'N/A'}"
 		si.set_posting_time = 1
 		si.due_date = frappe.utils.today()
 
@@ -56,40 +60,91 @@ class Trip(Document):
 		if len(si.get("items")) > 0:
 			si.set_missing_values()
 			si.insert(ignore_permissions=True)
-			frappe.msgprint(_("Draft Sales Invoice {0} created.").format(si.name))
+			frappe.msgprint(_("Draft Sales Invoice {0} created for Customer.").format(si.name))
 			self.add_comment("Info", f"Draft Sales Invoice created: {si.name}")
-		else:
-			frappe.msgprint(_("No sales amounts found. Sales Invoice was not created."))
 
 	def cancel_sales_invoice(self):
-		"""Cancel or Delete associated Sales Invoices upon Trip cancellation."""
+		"""Cancel associated Sales Invoices."""
 		sis = frappe.get_all("Sales Invoice", filters={"remarks": ["like", f"%{self.name}%"], "docstatus": ["<", 2]})
+		if not sis:
+			# Fallback for old records or reference based lookup
+			sis = frappe.get_all("Sales Invoice", filters={"remarks": ["like", f"%{self.booking_reference}%"], "docstatus": ["<", 2]})
+
 		for si_data in sis:
 			si = frappe.get_doc("Sales Invoice", si_data.name)
 			if si.docstatus == 0:
 				frappe.delete_doc("Sales Invoice", si.name, ignore_permissions=True)
 			elif si.docstatus == 1:
 				si.cancel()
-				frappe.msgprint(_("Sales Invoice {0} cancelled.").format(si.name))
+
+	def create_purchase_invoices(self):
+		"""
+		Identifies all unique suppliers in the Trip and creates a separate 
+		Purchase Invoice for each supplier's cost.
+		"""
+		suppliers = {} # {supplier_name: [list of segment rows]}
+		
+		# Collect all rows with cost and supplier
+		all_rows = []
+		for table in ["trip_flight_segments", "trip_hotel_stays", "trip_service_items", "trip_charges"]:
+			all_rows.extend(self.get(table))
+
+		for row in all_rows:
+			if row.cost_amount and getattr(row, "supplier", None):
+				if row.supplier not in suppliers:
+					suppliers[row.supplier] = []
+				suppliers[row.supplier].append(row)
+
+		for supplier, rows in suppliers.items():
+			self._create_single_purchase_invoice(supplier, rows)
+
+	def _create_single_purchase_invoice(self, supplier, rows):
+		"""Creates one Purchase Invoice for a specific supplier."""
+		pi = frappe.new_doc("Purchase Invoice")
+		pi.supplier = supplier
+		pi.remarks = f"Trip Cost: {self.booking_reference or self.name}"
+		pi.due_date = frappe.utils.today()
+		
+		for row in rows:
+			item_code = "BILET-MALIYETI"
+			item_name = "Bilet/Hizmet Maliyeti"
+			
+			if hasattr(row, 'hotel_name'):
+				item_code = "KONAKLAMA-MALIYETI"
+				item_name = "Konaklama Maliyeti"
+			
+			self._ensure_item(item_code, item_name, "Maliyetler", is_purchase=True)
+			
+			pi.append("items", {
+				"item_code": item_code,
+				"qty": 1,
+				"rate": row.cost_amount,
+				"description": f"PNR: {self.booking_reference} - {getattr(row, 'traveler', 'N/A')}"
+			})
+			
+		if len(pi.get("items")) > 0:
+			pi.set_missing_values()
+			pi.insert(ignore_permissions=True)
+			frappe.msgprint(_("Draft Purchase Invoice {0} created for {1}.").format(pi.name, supplier))
+
+	def cancel_purchase_invoices(self):
+		"""Cancel associated Purchase Invoices."""
+		pis = frappe.get_all("Purchase Invoice", filters={"remarks": ["like", f"%{self.booking_reference}%"], "docstatus": ["<", 2]})
+		for pi_data in pis:
+			pi = frappe.get_doc("Purchase Invoice", pi_data.name)
+			if pi.docstatus == 0:
+				frappe.delete_doc("Purchase Invoice", pi.name, ignore_permissions=True)
+			elif pi.docstatus == 1:
+				pi.cancel()
 
 	def _add_invoice_items(self, si):
-		"""
-		Maps child tables to Sales Invoice items.
-		If service_fee_display is 'Hidden', service_amount is bundled into the main product rate.
-		"""
+		"""Maps child tables to Sales Invoice items."""
 		display_hidden = (getattr(self, "service_fee_display", "Visible") == "Hidden")
 
 		# 1. Flights
 		for seg in self.get("trip_flight_segments", []):
 			if seg.sale_amount:
 				self._ensure_item("UCAK-BILETI", "Uçak Bileti", "Hizmetler")
-				
-				# Bundle rate if service fee is hidden
-				# Formula: Sale Amount - Service Fee (already included in sale usually)
-				# Actually in Aqua, 'Satış' includes everything. 
-				# If Hidden, we use the row's total sale_amount as the rate.
-				# If Visible, we use sale_amount - service_amount.
-				
 				rate = seg.sale_amount
 				if not display_hidden:
 					rate = seg.sale_amount - (seg.service_amount or 0)
@@ -114,7 +169,6 @@ class Trip(Document):
 		for hotel in self.get("trip_hotel_stays", []):
 			if hotel.sale_amount:
 				self._ensure_item("OTEL-KONAKLAMA", "Otel Konaklama", "Hizmetler")
-				
 				rate = hotel.sale_amount
 				if not display_hidden:
 					rate = hotel.sale_amount - (hotel.service_amount or 0)
@@ -140,7 +194,6 @@ class Trip(Document):
 			if srv.sale_amount:
 				item_code = f"{srv.service_category.upper()}-HIZMETI" if srv.service_category else "GENEL-HIZMET"
 				self._ensure_item(item_code, f"{srv.service_category or 'Genel'} Hizmeti", "Hizmetler")
-				
 				rate = srv.sale_amount
 				if not display_hidden:
 					rate = srv.sale_amount - (srv.service_amount or 0)
@@ -161,7 +214,7 @@ class Trip(Document):
 						"description": f"Hizmet Bedeli ({srv.service_category})"
 					})
 
-	def _ensure_item(self, item_code, item_name, item_group):
+	def _ensure_item(self, item_code, item_name, item_group, is_purchase=False):
 		"""Create item dynamically if it doesn't exist yet."""
 		if not frappe.db.exists("Item", item_code):
 			# Ensure Item Group exists
@@ -177,6 +230,7 @@ class Trip(Document):
 			doc.item_group = item_group
 			doc.is_stock_item = 0
 			doc.is_sales_item = 1
+			doc.is_purchase_item = 1 if is_purchase else 0
 			doc.insert(ignore_permissions=True)
 
 			# No commit here so it rolls back if Trip submit fails
