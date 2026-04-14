@@ -1,0 +1,301 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-04-14 00:20:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "booking_reference",
+  "supplier_pnr",
+  "booking_date",
+  "column_break_basic",
+  "customer",
+  "primary_traveler",
+  "pax_count",
+  "section_classification",
+  "product_type",
+  "trip_scope",
+  "column_break_class",
+  "status",
+  "sales_owner",
+  "office",
+  "section_financial",
+  "cost_amount",
+  "base_service_amount",
+  "column_break_fin",
+  "extra_amount",
+  "total_sale_amount",
+  "column_break_fin2",
+  "profit",
+  "currency",
+  "section_invoicing",
+  "customer_invoice_no",
+  "column_break_inv",
+  "supplier_invoice_no",
+  "section_segments",
+  "trip_flight_segments",
+  "section_hotels",
+  "trip_hotel_stays",
+  "section_services",
+  "trip_service_items",
+  "section_charges",
+  "trip_charges"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "TRIP-.YYYY.-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "booking_reference",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Booking Reference (PNR)",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "supplier_pnr",
+   "fieldtype": "Data",
+   "label": "Supplier PNR"
+  },
+  {
+   "fieldname": "booking_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Booking Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_basic",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "primary_traveler",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Primary Traveler",
+   "options": "Traveler"
+  },
+  {
+   "fieldname": "pax_count",
+   "fieldtype": "Int",
+   "label": "Pax Count",
+   "default": "1"
+  },
+  {
+   "fieldname": "section_classification",
+   "fieldtype": "Section Break",
+   "label": "Classification"
+  },
+  {
+   "fieldname": "product_type",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Product Type",
+   "options": "\nFlight\nHotel\nTransfer\nTrain\nOther"
+  },
+  {
+   "fieldname": "trip_scope",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Trip Scope",
+   "options": "\nDomestic\nInternational"
+  },
+  {
+   "fieldname": "column_break_class",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Draft\nNormal\nConfirmed\nCompleted\nCancelled\nRefunded",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sales_owner",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Sales Owner",
+   "options": "User"
+  },
+  {
+   "fieldname": "office",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Office",
+   "options": "\nİZGE TURİZM 2018\nSANCAKTEPE 2018"
+  },
+  {
+   "fieldname": "section_financial",
+   "fieldtype": "Section Break",
+   "label": "Financial Details"
+  },
+  {
+   "fieldname": "cost_amount",
+   "fieldtype": "Currency",
+   "label": "Cost Amount (Paid to Supplier)",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "base_service_amount",
+   "fieldtype": "Currency",
+   "label": "Service Fee",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_fin",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "extra_amount",
+   "fieldtype": "Currency",
+   "label": "Extra Amount",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_sale_amount",
+   "fieldtype": "Currency",
+   "label": "Total Sale",
+   "options": "currency",
+   "in_list_view": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_fin2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "profit",
+   "fieldtype": "Currency",
+   "label": "Profit",
+   "options": "currency",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "default": "TRY"
+  },
+  {
+   "fieldname": "section_invoicing",
+   "fieldtype": "Section Break",
+   "label": "Invoice References",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "customer_invoice_no",
+   "fieldtype": "Data",
+   "label": "Customer Invoice No"
+  },
+  {
+   "fieldname": "column_break_inv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "supplier_invoice_no",
+   "fieldtype": "Data",
+   "label": "Supplier Invoice No"
+  },
+  {
+   "fieldname": "section_segments",
+   "fieldtype": "Section Break",
+   "label": "Flight Segments"
+  },
+  {
+   "fieldname": "trip_flight_segments",
+   "fieldtype": "Table",
+   "label": "Flight Segments",
+   "options": "Trip Flight Segment"
+  },
+  {
+   "fieldname": "section_hotels",
+   "fieldtype": "Section Break",
+   "label": "Hotel Stays",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "trip_hotel_stays",
+   "fieldtype": "Table",
+   "label": "Hotel Stays",
+   "options": "Trip Hotel Stay"
+  },
+  {
+   "fieldname": "section_services",
+   "fieldtype": "Section Break",
+   "label": "Services (Visa, Tour, Transfer, etc)",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "trip_service_items",
+   "fieldtype": "Table",
+   "label": "Service Items",
+   "options": "Trip Service Item"
+  },
+  {
+   "fieldname": "section_charges",
+   "fieldtype": "Section Break",
+   "label": "Additional Charges",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "trip_charges",
+   "fieldtype": "Table",
+   "label": "Trip Charges",
+   "options": "Trip Charge"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-04-14 03:45:00.000000",
+ "modified_by": "Administrator",
+ "module": "Izge Travel",
+ "name": "Trip",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "booking_reference",
+ "search_fields": "booking_reference,customer,primary_traveler"
+}

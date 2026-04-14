@@ -39,7 +39,30 @@ def after_migrate():
 	from izge_travel.izge_travel.setup_items_taxes import setup_all
 	setup_all()
 
+	setup_suppliers()
+
 	frappe.logger("izge_travel").info("Custom configuration completed successfully.")
+
+def setup_suppliers():
+	"""Create essential suppliers for Izge Travel."""
+	suppliers = [
+		"Oteller", "BOOKINGAGORA", "VİZECİ", 
+		"SERENA AŞ", "KOLAY BİLET", "BİLET BANK", "SERENA THY İÇHAT"
+	]
+	# Get a default supplier group
+	sup_group = frappe.db.get_value("Supplier Group", {"name": ["like", "%Distrib%"]}, "name") or \
+				frappe.db.get_value("Supplier Group", {}, "name") or "All Supplier Groups"
+	
+	for s in suppliers:
+		if not frappe.db.exists("Supplier", {"supplier_name": s}):
+			sup = frappe.get_doc({
+				"doctype": "Supplier",
+				"supplier_name": s,
+				"supplier_group": sup_group,
+				"supplier_type": "Company"
+			})
+			sup.insert(ignore_permissions=True)
+			frappe.db.commit()
 
 def setup_naming_series_field(doctype, default_series):
 	"""Manually add naming_series field if missing and set options."""
