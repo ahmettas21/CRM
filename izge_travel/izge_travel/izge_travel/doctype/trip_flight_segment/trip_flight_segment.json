@@ -19,6 +19,7 @@
   "ticket_no",
   "traveler",
   "cost_amount",
+  "tax_amount",
   "service_amount",
   "extra_amount",
   "sale_amount"
@@ -107,6 +108,11 @@
    "fieldname": "cost_amount",
    "fieldtype": "Currency",
    "label": "Cost Amount"
+  },
+  {
+   "fieldname": "tax_amount",
+   "fieldtype": "Currency",
+   "label": "Tax Amount"
   },
   {
    "fieldname": "service_amount",

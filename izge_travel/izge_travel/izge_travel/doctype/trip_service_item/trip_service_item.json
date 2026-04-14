@@ -19,6 +19,7 @@
   "destination",
   "section_break_fin",
   "cost_amount",
+  "tax_amount",
   "service_amount",
   "extra_amount",
   "sale_amount"
@@ -103,6 +104,13 @@
    "options": "currency",
    "default": "0",
    "in_list_view": 1
+  },
+  {
+   "fieldname": "tax_amount",
+   "fieldtype": "Currency",
+   "label": "Tax Amount",
+   "options": "currency",
+   "default": "0"
   },
   {
    "fieldname": "service_amount",

@@ -29,6 +29,8 @@
   "total_sale_amount",
   "column_break_fin2",
   "profit",
+  "total_tax_amount",
+  "service_fee_display",
   "currency",
   "section_invoicing",
   "customer_invoice_no",
@@ -195,6 +197,20 @@
    "options": "currency",
    "read_only": 1,
    "in_list_view": 1
+  },
+  {
+   "fieldname": "total_tax_amount",
+   "fieldtype": "Currency",
+   "label": "Total Tax Amount",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "default": "Hidden (Inside Sale)",
+   "fieldname": "service_fee_display",
+   "fieldtype": "Select",
+   "label": "Service Fee Display",
+   "options": "Hidden (Inside Sale)\nVisible (Separate Item)"
   },
   {
    "fieldname": "currency",

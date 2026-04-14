@@ -95,6 +95,7 @@ class AquaImporter(Document):
 			trip.set("trip_flight_segments", [])
 			trip.set("trip_hotel_stays", [])
 			trip.set("trip_charges", [])
+			trip.set("trip_service_items", [])
 		else:
 			trip = frappe.new_doc("Trip")
 			trip.booking_reference = pnr
@@ -105,6 +106,7 @@ class AquaImporter(Document):
 		trip.supplier_pnr = str(first_row.get("Op.Pnr.No", "")).strip()
 		trip.customer_invoice_no = str(first_row.get("Müşteri Fat.No", "")).strip()
 		trip.supplier_invoice_no = str(first_row.get("Operatör Fat. No", "")).strip()
+		trip.service_fee_display = "Hidden"
 		
 		# Try to resolve Sales Owner
 		sales_owner_raw = str(first_row.get("Rez.Yapan", "")).strip()
@@ -162,6 +164,11 @@ class AquaImporter(Document):
 			e_amount = self._parse_amount(r.get("Ekstra Bedel", "0"))
 			total_sale = self._parse_amount(r.get("Satış", "0"))
 			
+			# TAX CALCULATION (From Service Fee - 20% VAT)
+			tax_val = 0
+			if s_amount > 0:
+				tax_val = round((s_amount / 1.20) * 0.20, 2)
+			
 			is_charge = not self._is_actual_traveler(raw_yolcu)
 			
 			if is_charge:
@@ -173,6 +180,7 @@ class AquaImporter(Document):
 					"service_amount": s_amount,
 					"extra_amount": e_amount,
 					"sale_amount": total_sale,
+					"tax_amount": tax_val,
 					"related_traveler": traveler_id
 				})
 			elif modul == "UÇAK":
@@ -197,7 +205,8 @@ class AquaImporter(Document):
 					"cost_amount": c_amount,
 					"service_amount": s_amount,
 					"extra_amount": e_amount,
-					"sale_amount": total_sale
+					"sale_amount": total_sale,
+					"tax_amount": tax_val
 				})
 			elif modul == "OTEL":
 				supplier_name_raw = str(r.get("Tedarikçi", r.get("Operatör", ""))).strip()
@@ -216,7 +225,8 @@ class AquaImporter(Document):
 					"cost_amount": c_amount,
 					"service_amount": s_amount,
 					"extra_amount": e_amount,
-					"sale_amount": total_sale
+					"sale_amount": total_sale,
+					"tax_amount": tax_val
 				})
 			else:
 				# Vize, Transfer, Tur, Araç, Sigorta vs.
@@ -263,7 +273,8 @@ class AquaImporter(Document):
 					"cost_amount": c_amount,
 					"service_amount": s_amount,
 					"extra_amount": e_amount,
-					"sale_amount": total_sale
+					"sale_amount": total_sale,
+					"tax_amount": tax_val
 				})
 				
 		trip.pax_count = valid_pax_count if valid_pax_count > 0 else 1
