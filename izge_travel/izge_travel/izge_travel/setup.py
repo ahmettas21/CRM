@@ -62,7 +62,7 @@ def setup_suppliers():
 				"supplier_type": "Company"
 			})
 			sup.insert(ignore_permissions=True)
-			frappe.db.commit()
+			# Manual commit removed per Frappe Best Practices
 
 def setup_naming_series_field(doctype, default_series):
 	"""Manually add naming_series field if missing and set options."""

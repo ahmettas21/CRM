@@ -26,26 +26,26 @@ frappe.ui.form.on('Trip', {
 });
 
 // --- Child Table Calculation Logic ---
-const trigger_fields = ['cost_amount', 'service_amount', 'extra_amount'];
 const tables = ['Trip Flight Segment', 'Trip Hotel Stay', 'Trip Service Item', 'Trip Charge'];
 
 tables.forEach(table => {
-	let handlers = {};
-	trigger_fields.forEach(f => {
-		handlers[f] = function(frm, cdt, cdn) {
-			calculate_row_sale(frm, cdt, cdn, f);
-		};
+	frappe.ui.form.on(table, {
+		cost_amount(frm, cdt, cdn) { calculate_row_sale(frm, cdt, cdn, 'cost_amount'); },
+		service_amount(frm, cdt, cdn) { calculate_row_sale(frm, cdt, cdn, 'service_amount'); },
+		extra_amount(frm, cdt, cdn) { calculate_row_sale(frm, cdt, cdn, 'extra_amount'); },
+		sale_amount(frm, cdt, cdn) { calculate_parent_totals(frm); },
+		tax_amount(frm, cdt, cdn) { calculate_parent_totals(frm); }
 	});
-	
-	// Also trigger for removals
+
+	// Handle row removal
 	let table_field = table.toLowerCase().replace(/ /g, '_') + 's';
 	if (table === 'Trip Charge') table_field = 'trip_charges';
-
-	handlers[table_field + '_remove'] = function(frm) {
+	
+	let removal_handler = {};
+	removal_handler[table_field + '_remove'] = function(frm) {
 		calculate_parent_totals(frm);
 	};
-
-	frappe.ui.form.on(table, handlers);
+	frappe.ui.form.on('Trip', removal_handler);
 });
 
 function calculate_row_sale(frm, cdt, cdn, triggered_field) {
@@ -54,13 +54,13 @@ function calculate_row_sale(frm, cdt, cdn, triggered_field) {
 	let service = flt(row.service_amount);
 	let extra = flt(row.extra_amount);
 	
-	// 1. Calculate main sale amount (Sale = Cost + Service + Extra in Aqua logic)
-	let sale = cost + service + extra;
+	// 1. Calculate main sale amount (Sale = Cost + Service + Extra)
+	let sale = flt(cost + service + extra);
 	frappe.model.set_value(cdt, cdn, 'sale_amount', sale);
 
-	// 2. Auto-calc Tax from Service Fee (assume 20% VAT included in service fee)
+	// 2. Auto-calc Tax from Service Fee (20% VAT)
 	if (triggered_field === 'service_amount' && service > 0) {
-		let tax = Math.round((service / 1.20) * 0.20 * 100) / 100;
+		let tax = flt(Math.round((service / 1.20) * 0.20 * 100) / 100);
 		frappe.model.set_value(cdt, cdn, 'tax_amount', tax);
 	}
 
@@ -74,9 +74,9 @@ function calculate_parent_totals(frm) {
 	let total_sale = 0;
 	let total_tax = 0;
 
-	let tables = ['trip_flight_segments', 'trip_hotel_stays', 'trip_service_items', 'trip_charges'];
+	let child_table_fields = ['trip_flight_segments', 'trip_hotel_stays', 'trip_service_items', 'trip_charges'];
 
-	tables.forEach(t => {
+	child_table_fields.forEach(t => {
 		(frm.doc[t] || []).forEach(row => {
 			total_cost += flt(row.cost_amount);
 			total_service += flt(row.service_amount);
@@ -86,11 +86,13 @@ function calculate_parent_totals(frm) {
 		});
 	});
 
-	frm.set_value('cost_amount', total_cost);
-	frm.set_value('base_service_amount', total_service);
-	frm.set_value('extra_amount', total_extra);
-	frm.set_value('total_sale_amount', total_sale);
-	frm.set_value('total_tax_amount', total_tax);
-	frm.set_value('profit', total_sale - total_cost);
+	frm.set_value({
+		cost_amount: total_cost,
+		base_service_amount: total_service,
+		extra_amount: total_extra,
+		total_sale_amount: total_sale,
+		total_tax_amount: total_tax,
+		profit: flt(total_sale - total_cost)
+	});
 }
 

@@ -9,6 +9,7 @@ class Trip(Document):
 
 	def calculate_totals(self):
 		"""Sum up all financial fields from flight, hotel, and charge child tables."""
+		from frappe.utils import flt
 		self.cost_amount = 0
 		self.base_service_amount = 0
 		self.extra_amount = 0
@@ -25,25 +26,24 @@ class Trip(Document):
 
 		for table in child_tables:
 			for row in self.get(table):
-				self.cost_amount += row.cost_amount or 0
-				self.base_service_amount += row.service_amount or 0
-				self.extra_amount += row.extra_amount or 0
-				self.total_sale_amount += row.sale_amount or 0
-				self.total_tax_amount += row.tax_amount or 0
+				self.cost_amount += flt(row.cost_amount)
+				self.base_service_amount += flt(row.service_amount)
+				self.extra_amount += flt(row.extra_amount)
+				self.total_sale_amount += flt(row.sale_amount)
+				self.total_tax_amount += flt(row.tax_amount)
 
 		# Profit
 		self.profit = self.total_sale_amount - self.cost_amount
 
 	def on_submit(self):
+		super().on_submit()
 		if getattr(self, "customer", None):
-			self.create_sales_invoice()
+			si_name = self.create_sales_invoice()
+			if si_name:
+				self.db_set("customer_invoice_no", si_name)
 		
 		# Full Cari Control: Create Purchase Invoices for Suppliers
 		self.create_purchase_invoices()
-		
-	def on_cancel(self):
-		self.cancel_sales_invoice()
-		self.cancel_purchase_invoices()
 
 	def create_sales_invoice(self):
 		"""Create a draft Sales Invoice pulling financial data from Trip."""
@@ -62,6 +62,8 @@ class Trip(Document):
 			si.insert(ignore_permissions=True)
 			frappe.msgprint(_("Draft Sales Invoice {0} created for Customer.").format(si.name))
 			self.add_comment("Info", f"Draft Sales Invoice created: {si.name}")
+			return si.name
+		return None
 
 	def cancel_sales_invoice(self):
 		"""Cancel associated Sales Invoices."""
