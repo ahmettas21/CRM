@@ -286,20 +286,25 @@ class AquaImporter(Document):
 		"""
 		if not supplier_name: return None
 		
-		# Check if supplier exists by supplier_name
-		existing_id = frappe.db.get_value("Supplier", {"supplier_name": supplier_name}, "name")
-		if existing_id:
-			return existing_id
+		try:
+			# Check if supplier exists by supplier_name
+			res = frappe.db.get_value("Supplier", {"supplier_name": supplier_name}, "name")
+			if res:
+				return res
+				
+			# Else create new
+			sup_group = frappe.db.get_value("Supplier Group", {}, "name") or "All Supplier Groups"
+			sup = frappe.new_doc("Supplier")
+			sup.supplier_name = supplier_name
+			sup.supplier_group = sup_group
+			sup.supplier_type = "Company"
+			sup.insert(ignore_permissions=True)
 			
-		# Else create new
-		sup_group = frappe.db.get_value("Supplier Group", {}, "name") or "All Supplier Groups"
-		sup = frappe.new_doc("Supplier")
-		sup.supplier_name = supplier_name
-		sup.supplier_group = sup_group
-		sup.supplier_type = "Company"
-		sup.insert(ignore_permissions=True)
-		
-		return sup.name
+			return sup.name
+		except Exception as e:
+			frappe.log_error(f"Supplier Creation Error: {str(e)}", "Aqua Importer")
+			# Prepend to log_details if we are in process_import
+			return None
 			
 	def _resolve_traveler(self, full_text, customer):
 		"""Splits MR/MRS prefix and creates traveler if missing"""
