@@ -1,0 +1,17 @@
+--- SCEN-DASH-001: Sales & Profitability Monitor — SQL Validation ---
+Date: 2026-04-17
+Status: PASSED (All 6 Assertions)
+
+P1 PASSED: Core SQL query syntax — 1 row returned without error.
+P2 PASSED: Margin calculation cross-check — all rows correct.
+P3 PASSED: Aggregate cross-check — Trips=2, Sales=26,800 TL, Profit=9,700 TL.
+P4 PASSED: product_type filter (Flight) — 2 trips, 26,800 TL.
+P5 PASSED: Number Card widget queries — all 3 executed successfully.
+P6 PASSED: Operational Health sub-query — 0 unhealthy trips found.
+
+Production Metrics at Test Time:
+  Total Submitted Trips: 2
+  Total Sales:           26,800.00 TL
+  Net Profit:            9,700.00 TL
+  Margin:                ~36.2%
+  Unhealthy Trips:       0

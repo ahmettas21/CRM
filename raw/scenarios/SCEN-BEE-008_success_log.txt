@@ -1,0 +1,7 @@
+--- SCEN-BEE-008: No-Show & Partial (Tax-Only) Refund ---
+✅ Original Sales Invoice Created: ACC-SINV-2026-00012 | Total: 10000.0
+✅ Credit Note Created: ACC-SINV-2026-00013 (Sadece Vergi İadesi=800.0 TL)
+
+--- Running Assertions (No-Show Ledger Immutability) ---
+✅ P1: Customer Ledger Net Balance perfectly matched to the unflown Base Fare (9200.0 TL). Tax liability removed securely.
+🎉 ALL ASSERTS PASSED. No-Show & Tax-Only Refund works perfectly under ERPNext Rules.

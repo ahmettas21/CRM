@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/tmp/run_scenario_008.py", line 82, in <module>
+    run_scenario_008()
+  File "/tmp/run_scenario_008.py", line 76, in run_scenario_008
+    assert si_out == base_fare, f"FAIL: Outstanding amount changed unexpectedly to {si_out}. Expected {base_fare}"
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: FAIL: Outstanding amount changed unexpectedly to 10000.0. Expected 9200.0

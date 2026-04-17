@@ -1,0 +1,2 @@
+pymysql.err.OperationalError: (1054, "Unknown column 'traveler_name' in 'WHERE'")
+(Note: Filtering by 'traveler_name' failed on Traveler DocType. Need to check real fieldname, likely 'full_name' or 'name')

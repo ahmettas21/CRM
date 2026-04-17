@@ -1,0 +1,2 @@
+frappe.exceptions.LinkValidationError: Could not find Row #1: Yolcu: Test User
+(Note: Likely because Trip expects Traveler ID (e.g. TRAV-xxx), but was given traveler_name string)

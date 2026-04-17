@@ -13,6 +13,13 @@ def check_groups():
     
     sg = frappe.get_all("Supplier Group", limit=5)
     print("Supplier Groups:", [s.name for s in sg])
+    
+    ig = frappe.get_all("Item Group", filters={"is_group": 1})
+    print("Item Groups (Groups):", [i.name for i in ig])
+
+    travelers = frappe.get_all("Traveler", fields=["name", "full_name"])
+    for t in travelers:
+        print(f"Traveler: {t.name} | {t.full_name}")
 
 if __name__ == "__main__":
     check_groups()

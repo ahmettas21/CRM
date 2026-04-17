@@ -1,0 +1,10 @@
+--- SCEN-BEE-015: ADM (Agency Debit Memo) Management ---
+✅ Original Sales Invoice (Closed Month): ACC-SINV-2026-00017 | Revenue: 10,000 TL
+✅ Original Cost (Purchase Invoice): ACC-PINV-2026-00008 | Base Cost: 9,000 TL
+✅ ADM (Purchase Invoice) Created in Current Month: ACC-PINV-2026-00009 | Extra Cost: 500.0 TL
+
+--- Running ADM Profitability Assertions ---
+✅ P1: Original Sales Invoice remains Immutable (Audit Safe).
+✅ P2: Cost Center 'TRIP-ADM-999' accurately reflects cumulative cost (9500.0 TL).
+✅ P3: Net Profit for Trip successfully adjusted to 500.0 TL without altering history.
+🎉 ALL ASSERTS PASSED. ADM Scenario is valid.

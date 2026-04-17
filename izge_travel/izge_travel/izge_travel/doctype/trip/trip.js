@@ -152,6 +152,25 @@ frappe.ui.form.on('Trip', {
 		// SUBMITTED STATE: Accounting Buttons
 		// ═══════════════════════════════════════════
 		if (frm.doc.docstatus === 1) {
+			// SOP TRIGGER: Make Sales Invoice (Whitelisted)
+			if (!frm.doc.customer_invoice_no && frm.doc.profit > 0) {
+				frm.add_custom_button(__('Fatura Oluştur'), () => {
+					frappe.confirm(__('Bu Trip verilerinden bir Satış Faturası taslağı oluşturulacak. Onaylıyor musunuz?'), () => {
+						frm.call({
+							doc: frm.doc,
+							method: 'make_sales_invoice',
+							freeze: true,
+							callback: function(r) {
+								if (r.message) {
+									frappe.show_alert({message: __('Fatura Taslağı Oluşturuldu: ') + r.message, indicator: 'green'});
+									frm.reload_doc();
+								}
+							}
+						});
+					});
+				}, __('Muhasebe'));
+			}
+
 			frm.add_custom_button(__('Satış Faturaları'), () => {
 				frappe.set_route("List", "Sales Invoice", {
 					"remarks": ["like", "%" + (frm.doc.booking_reference || frm.doc.name) + "%"]
@@ -221,6 +240,26 @@ frappe.ui.form.on('Trip', {
 	},
 	cc_commission_rate(frm) {
 		calculate_cc_commission(frm);
+	},
+	
+	product_type(frm) {
+		if (frm.doc.product_type === 'Service') {
+			frm.set_df_property('section_segments', 'hidden', 1);
+			frm.set_df_property('section_hotels', 'hidden', 1);
+			frm.set_df_property('section_services', 'hidden', 0);
+			frm.dashboard.set_headline_alert("Vize ve Hizmet girişleri için tasarlanmış görünümdedir. Sadece kâr/hizmet bedeli %20 KDV ile satılır.");
+		} else if (frm.doc.product_type === 'Hotel') {
+			frm.set_df_property('section_segments', 'hidden', 1);
+			frm.set_df_property('section_hotels', 'hidden', 0);
+			frm.dashboard.set_headline_alert("Otel konaklamalarında KDV %10, üzerine koyduğunuz hizmet bedeli %20'dir.");
+		} else if (['Package', 'Tour'].includes(frm.doc.product_type)) {
+			frm.set_df_property('section_segments', 'hidden', 0);
+			frm.set_df_property('section_hotels', 'hidden', 0);
+			frm.set_df_property('section_services', 'hidden', 0);
+			frm.dashboard.set_headline_alert("Paket turlarda KDV matrah indirimi: Maliyetler 0 KDV, Hizmet Bedeli %20 KDV.");
+		} else {
+			frm.dashboard.clear_headline();
+		}
 	}
 });
 

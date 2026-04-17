@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/tmp/run_scenario_015.py", line 106, in <module>
+    run_scenario_015()
+  File "/tmp/run_scenario_015.py", line 16, in run_scenario_015
+    frappe.get_doc({"doctype": "Supplier", "supplier_name": supplier, "supplier_group": "Airlines"}).insert(ignore_permissions=True)
+  File "/home/frappe/bench/apps/frappe/frappe/model/document.py", line 301, in insert
+    self._validate_links()
+frappe.exceptions.LinkValidationError: Could not find Supplier Group: Airlines

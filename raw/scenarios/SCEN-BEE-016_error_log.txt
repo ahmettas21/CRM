@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/tmp/run_scenario_016.py", line 117, in <module>
+    run_scenario_016()
+  File "/tmp/run_scenario_016.py", line 33, in run_scenario_016
+    raise Exception("HATA: Sistemde uygun bir 700'lü Expense (Gider) hesabı bulunamadı.")
+Exception: HATA: Sistemde uygun bir 700'lü Expense (Gider) hesabı bulunamadı.

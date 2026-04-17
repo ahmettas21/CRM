@@ -7,6 +7,16 @@ class Trip(Document):
 	def validate(self):
 		self.calculate_totals()
 		self.calculate_cc_commission()
+		self.check_margin_guardrail()
+
+	def check_margin_guardrail(self):
+		"""SOP Guardrail: Zararına satış engellemesi (Sales < Cost)."""
+		from frappe.utils import flt
+		if flt(self.total_sale_amount) < flt(self.cost_amount) and self.status not in ["Cancelled", "Refunded", "Void"]:
+			frappe.throw(
+				_("SOP-GUARDRAIL: Toplam satış tutarı ({0}) maliyetten ({1}) düşük olamaz! Lütfen kârlılığı kontrol edin.")
+				.format(self.total_sale_amount, self.cost_amount)
+			)
 
 	def calculate_totals(self):
 		"""Sum up all financial fields from flight, hotel, and charge child tables."""
@@ -47,12 +57,9 @@ class Trip(Document):
 			self.cc_commission_amount = 0
 
 	def on_submit(self):
-		if getattr(self, "customer", None):
-			si_name = self.create_sales_invoice()
-			if si_name:
-				self.db_set("customer_invoice_no", si_name)
-		
-		# Full Cari Control: Create Purchase Invoices for Suppliers
+		# Muhasebe hareketi için Sales Invoice otomatik oluşmasın, 
+		# Kullanıcı 'Make Invoice' butonuyla (API) kendisi tetikleyecek.
+		# Ancak submit anında maliyetlerin Purchase Invoice olarak oluşması vizyonunu koruyalım.
 		self.create_purchase_invoices()
 		
 		# CC Commission Journal Entry
@@ -64,8 +71,25 @@ class Trip(Document):
 		self.cancel_sales_invoice()
 		self.cancel_purchase_invoices()
 
+	@frappe.whitelist()
+	def make_sales_invoice(self):
+		"""
+		SOP Trigger: Create a draft Sales Invoice from Trip screen manually.
+		Trip controller muhasebenin sahibi değil, kural motorudur.
+		"""
+		if self.docstatus != 1:
+			frappe.throw(_("Fatura oluşturmak için önce Trip kaydını Submit etmelisiniz."))
+			
+		if self.customer_invoice_no:
+			frappe.throw(_("Bu Trip için zaten bir fatura oluşturulmuş: {0}").format(self.customer_invoice_no))
+
+		si_name = self.create_sales_invoice()
+		if si_name:
+			self.db_set("customer_invoice_no", si_name)
+			return si_name
+		return None
+
 	def create_sales_invoice(self):
-		"""Create a draft Sales Invoice pulling financial data from Trip."""
 		si = frappe.new_doc("Sales Invoice")
 		si.customer = self.customer
 		si.remarks = f"Booking Ref: {self.booking_reference or 'N/A'} | Trip: {self.name}"
@@ -73,8 +97,16 @@ class Trip(Document):
 		si.due_date = self.payment_due_date or frappe.utils.today()
 		
 		# Attach Payment Terms if set
-		if self.payment_terms_template:
+		if hasattr(self, "payment_terms_template") and self.payment_terms_template:
 			si.payment_terms_template = self.payment_terms_template
+
+		# Seçilen senaryoya göre vergi şablonu ata
+		if self.product_type == "Hotel":
+			si.taxes_and_charges = "TAX-DOMESTIC-PACKAGE"
+		elif self.product_type in ["Package", "Tour"] and self.trip_scope == "International":
+			si.taxes_and_charges = "TAX-OUTGOING-PACKAGE"
+		elif self.product_type == "Service":
+			si.taxes_and_charges = "TAX-SERVICE-PACKAGE"
 
 		# Add line items based on child tables and display preferences
 		self._add_invoice_items(si)
@@ -244,10 +276,92 @@ class Trip(Document):
 		frappe.msgprint(_("CC Commission Journal Entry {0} created.").format(je.name))
 
 	def _add_invoice_items(self, si):
-		"""Maps child tables to Sales Invoice items."""
-		display_hidden = (getattr(self, "service_fee_display", "Visible") == "Hidden")
+		"""Maps child tables to Sales Invoice items based on Product Type and Item Segmentation."""
+		from frappe.utils import flt
 
-		# 1. Flights
+		# 1. PACKAGE / TOUR (Kombine Mantık)
+		if self.product_type in ["Package", "Tour"]:
+			if self.cost_amount > 0:
+				self._ensure_item("YURTDISI-MALIYET-YANSITMA", "Yurtdışı Maliyet Yansıtma", "Hizmetler")
+				si.append("items", {
+					"item_code": "YURTDISI-MALIYET-YANSITMA",
+					"qty": 1,
+					"rate": flt(self.cost_amount),
+					"description": f"Tur Maliyet Yansıtması - {self.booking_reference}"
+				})
+			
+			if self.profit > 0 or self.base_service_amount > 0:
+				fee = flt(self.total_sale_amount) - flt(self.cost_amount)
+				self._ensure_item("HIZMET-BEDELI", "Acente Hizmet Bedeli", "Servis")
+				si.append("items", {
+					"item_code": "HIZMET-BEDELI",
+					"qty": 1,
+					"rate": fee,
+					"description": f"Acente Hizmet Bedeli - {self.booking_reference}"
+				})
+			return
+
+		# 2. HOTEL (Item Segmentation)
+		if self.product_type == "Hotel":
+			for hotel in self.get("trip_hotel_stays", []):
+				if hotel.cost_amount > 0:
+					self._ensure_item("KONAKLAMA-MALIYETI", "Konaklama Maliyeti", "Hizmetler")
+					si.append("items", {
+						"item_code": "KONAKLAMA-MALIYETI",
+						"qty": 1,
+						"rate": flt(hotel.cost_amount),
+						"description": f"Otel Maliyet: {hotel.hotel_name}"
+					})
+				if flt(hotel.sale_amount) > flt(hotel.cost_amount):
+					fee = flt(hotel.sale_amount) - flt(hotel.cost_amount)
+					self._ensure_item("HIZMET-BEDELI", "Hizmet Bedeli", "Servis")
+					si.append("items", {
+						"item_code": "HIZMET-BEDELI",
+						"qty": 1,
+						"rate": fee,
+						"description": f"Konaklama Hizmet Kârı: {hotel.hotel_name}"
+					})
+			return
+
+		# 3. SERVICE (Visa, vb.)
+		if self.product_type == "Service":
+			for srv in self.get("trip_service_items", []):
+				# Vize Harcı gibi passthrough (Kâr sıfır) olanları ayrı satır bas
+				if flt(srv.sale_amount) == flt(srv.cost_amount) and flt(srv.cost_amount) > 0:
+					item_code = "VIZE-HARCI" if srv.service_category == "Visa" else "HIZMET-HARCI"
+					self._ensure_item(item_code, f"{srv.service_category or 'Hizmet'} Harcı/Maliyeti", "Hizmetler")
+					si.append("items", {
+						"item_code": item_code,
+						"qty": 1,
+						"rate": flt(srv.sale_amount),
+						"description": f"Pass-through Harç: {srv.service_name}"
+					})
+				# Kâr varsa ayrı hizmet satırı
+				elif flt(srv.sale_amount) > flt(srv.cost_amount):
+					item_code = "VIZE-DANISMANLIK" if srv.service_category == "Visa" else f"{srv.service_category.upper()}-HIZMETI"
+					cost = flt(srv.cost_amount)
+					fee = flt(srv.sale_amount) - cost
+					
+					if cost > 0:
+						self._ensure_item(f"{item_code}-MALIYET", f"{srv.service_category} Maliyet", "Hizmetler")
+						si.append("items", {
+							"item_code": f"{item_code}-MALIYET",
+							"qty": 1,
+							"rate": cost,
+							"description": f"{srv.service_name} (Maliyet)"
+						})
+					
+					self._ensure_item(item_code, f"{srv.service_category} Bedeli", "Servis")
+					si.append("items", {
+						"item_code": item_code,
+						"qty": 1,
+						"rate": fee,
+						"description": f"{srv.service_name} (Danışmanlık/Hizmet)"
+					})
+			return
+
+		# Default Flight / Diğer davranışları (Eski yapıyı koru)
+		display_hidden = (getattr(self, "service_fee_display", "Visible") == "Hidden")
 		for seg in self.get("trip_flight_segments", []):
 			if seg.sale_amount:
 				self._ensure_item("UCAK-BILETI", "Uçak Bileti", "Hizmetler")
@@ -271,74 +385,15 @@ class Trip(Document):
 						"description": f"Hizmet Bedeli (Bilet): {seg.traveler}"
 					})
 
-		# 2. Hotels
-		for hotel in self.get("trip_hotel_stays", []):
-			if hotel.sale_amount:
-				self._ensure_item("OTEL-KONAKLAMA", "Otel Konaklama", "Hizmetler")
-				rate = hotel.sale_amount
-				if not display_hidden:
-					rate = hotel.sale_amount - (hotel.service_amount or 0)
-
-				si.append("items", {
-					"item_code": "OTEL-KONAKLAMA",
-					"qty": 1,
-					"rate": rate,
-					"description": f"Otel: {hotel.hotel_name} - Giriş: {hotel.check_in_date}"
-				})
-
-				if not display_hidden and hotel.service_amount:
-					self._ensure_item("HIZMET-BEDELI", "Hizmet Bedeli", "Servis")
-					si.append("items", {
-						"item_code": "HIZMET-BEDELI",
-						"qty": 1,
-						"rate": hotel.service_amount,
-						"description": f"Hizmet Bedeli (Konaklama): {hotel.hotel_name}"
-					})
-
-		# 3. Service Items (Visa, etc.)
-		for srv in self.get("trip_service_items", []):
-			if srv.sale_amount:
-				item_code = f"{srv.service_category.upper()}-HIZMETI" if srv.service_category else "GENEL-HIZMET"
-				self._ensure_item(item_code, f"{srv.service_category or 'Genel'} Hizmeti", "Hizmetler")
-				rate = srv.sale_amount
-				if not display_hidden:
-					rate = srv.sale_amount - (srv.service_amount or 0)
-
-				si.append("items", {
-					"item_code": item_code,
-					"qty": 1,
-					"rate": rate,
-					"description": f"{srv.service_category}: {srv.service_name}"
-				})
-
-				if not display_hidden and srv.service_amount:
-					self._ensure_item("HIZMET-BEDELI", "Hizmet Bedeli", "Servis")
-					si.append("items", {
-						"item_code": "HIZMET-BEDELI",
-						"qty": 1,
-						"rate": srv.service_amount,
-						"description": f"Hizmet Bedeli ({srv.service_category})"
-					})
-
-		# 4. Charges (CIP, Baggage, etc.)
-		for chg in self.get("trip_charges", []):
-			if chg.sale_amount:
-				self._ensure_item("EK-MASRAF-SATIS", "Ek Masraf", "Hizmetler")
-				si.append("items", {
-					"item_code": "EK-MASRAF-SATIS",
-					"qty": 1,
-					"rate": chg.sale_amount,
-					"description": f"{chg.charge_type}: {chg.description or 'N/A'}"
-				})
-
 	def _ensure_item(self, item_code, item_name, item_group, is_purchase=False):
 		"""Create item dynamically if it doesn't exist yet."""
 		if not frappe.db.exists("Item", item_code):
 			# Ensure Item Group exists
 			if not frappe.db.exists("Item Group", item_group):
+				root_ig = frappe.db.get_value("Item Group", {"is_group": 1, "parent_item_group": ["is", "not set"]}, "name") or "All Item Groups"
 				ig = frappe.new_doc("Item Group")
 				ig.item_group_name = item_group
-				ig.parent_item_group = "All Item Groups"
+				ig.parent_item_group = root_ig
 				ig.insert(ignore_permissions=True)
 
 			doc = frappe.new_doc("Item")

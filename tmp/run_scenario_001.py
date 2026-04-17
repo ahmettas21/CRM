@@ -89,6 +89,7 @@ def run_scenario():
     trip.customer = doc.name
     trip.booking_reference = "BEE-AKAD-2026-001"
     trip.product_type = "Flight"
+    trip.supplier = supp.name
     trip.payment_method = "Credit (Vadeli)"
     trip.payment_terms_template = term.name
     trip.booking_date = today()
@@ -117,6 +118,7 @@ def run_scenario():
 
     trip.insert(ignore_permissions=True)
     trip.submit()
+    frappe.db.commit()
     print(f"Trip {trip.name} Submitted Successfully!")
     
     # 6. Check SI and PI

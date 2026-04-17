@@ -1,0 +1,7 @@
+--- SCEN-TRIP-002: UI-Triggered Billing (Client-Side Simulation) ---
+PASSED | Trip Created/Submitted: TRIP-2026-00134
+PASSED | Billing API (whitelisted) Triggered
+PASSED | Sales Invoice Generated: ACC-SINV-2026-00018
+PASSED | Linkage Assertion: Trip.customer_invoice_no is correctly set.
+PASSED | Guardrail Check: Duplicate Invoice Validation Blocked as expected.
+PASSED | Controller Sync: Remote trip.py updated and verified.

@@ -2,9 +2,13 @@
 Hoş geldiniz. Bu proje **LLM Wiki** protokolü ile yönetilmektedir.
 
 ## 🧭 Navigasyon
+- [**🏛️ MASTER OVERVIEW**](MASTER_OVERVIEW.md): Projenin tek kaynak gerçeği — tüm mimari, testler ve yol haritası.
 - [**Mission Control**](mission_control.md): Mevcut hedefler ve proje durumu.
 - [**Change Log**](log.md): Teknik değişim günlüğü.
 - [🧠 **Lessons Learned**](lessons_learned.md): Acı tecrübeler ve altın çözümler.
+- [📊 **Dashboard Blueprint**](dashboard_blueprint.md): 4-panel yönetim dashboard tasarımı.
+- [🖥️ **UX Flows**](UX_FLOWS.md): Satışçı ve Muhasebe ekran akışları.
+- [⚙️ **Setup Checklist**](SETUP_CHECKLIST.md): Zorunlu ERPNext ayarları kontrol listesi.
 - [**AI Oath**](oath.md): Sadakat ve dürüstlük yemini.
 - [**Infrastructure**](../raw/infrastructure.md): Altyapı ve sistem mimarisi.
 

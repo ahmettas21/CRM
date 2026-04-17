@@ -1,0 +1,74 @@
+PILOT-001 FAZ 1-2 — OTOMATIK REGRESYON SONUÇLARI
+=================================================
+Tarih: 2026-04-17
+Site: erpnext-production-1b2e.up.railway.app
+Script: tmp/run_pilot_001_phase1_2.py
+
+FAZ 1: SATIŞ (Satışçı Rolü)
+─────────────────────────────
+✅ Customer yaratıldı: Mehmet Yılmaz
+✅ Traveler yaratıldı: TRAV-2026-00163
+✅ Supplier: Lufthansa Airlines
+✅ Airports: IST → ESB
+✅ Airline: PC
+✅ Trip kaydedildi: TRIP-2026-00135
+✅ Satış toplamı: 3900.0 TL
+✅ Maliyet toplamı: 3500.0 TL
+✅ Kâr: 400.0 TL
+✅ Trip submitted (docstatus=1)
+⚠️ PI yaratılmadı (on_submit controller synced olmayabilir)
+⚠️ CC JE yaratılmadı (cc commission controller synced olmayabilir)
+✅ Draft Sales Invoice yaratıldı: ACC-SINV-2026-00019
+✅ SI durumu: Draft
+✅ SI müşterisi: Mehmet Yılmaz
+✅ SI Grand Total: 3900.0 TL
+✅ SI Remarks: PILOT001 referansı mevcut
+✅ Trip → SI link: ACC-SINV-2026-00019
+
+FAZ 2: MUHASEBE ONAY
+─────────────────────
+✅ SI submitted: ACC-SINV-2026-00019 (docstatus=1)
+✅ GL Entry sayısı: 2
+✅ AR Debit: 120.01 - ALICILAR - IZGET = 3900.0 TL
+✅ Gelir Credit: 600.01 - YURT İÇİ SATIŞLAR - IZGET = 3900.0 TL
+✅ Payment Entry yaratıldı: ACC-PAY-2026-00012 (POS-PILOT-001)
+✅ Banka hesabı: 102.01.001 - İŞ BANKASI 4846 - IZGET
+✅ SI Outstanding: 0.0 TL (Tam Ödendi)
+✅ PE GL Entry sayısı: 2
+✅ Müşteri toplam AR bakiye: 0 TL
+
+SONUÇ RAPORU
+─────────────
+✅ Trip Profit:                400.0 TL (Beklenen: 400.0)
+✅ Trip Total Sale:            3900.0 TL (Beklenen: 3900.0)
+✅ Trip Cost:                  3500.0 TL (Beklenen: 3500.0)
+✅ SI Grand Total:             3900.0 TL (Beklenen: 3900.0)
+✅ SI Outstanding (PE sonrası): 0.0 TL (Beklenen: 0.0)
+✅ GL Entry (SI):              2 (Beklenen: ≥2)
+✅ GL Entry (PE):              2 (Beklenen: ≥2)
+
+🎉 TÜM KONTROLLER PASSED (7/7)
+
+GÖZLEM NOTLARI
+──────────────
+1. PI/CC_JE otomatik yaratılmadı: Bu, on_submit içindeki
+   create_purchase_invoices() ve create_cc_commission_entry()
+   metodlarının production'a henüz tam sync olmadığını gösterir.
+   trip.py dosyasının en son hali sunucuya gönderilmeli.
+
+2. make_sales_invoice() ve create_sales_invoice() başarılı:
+   Whitelisted API akışı sorunsuz çalışıyor.
+
+3. GL hareket doğrulama (SI): 
+   Debit: 120.01 ALICILAR 3900 TL
+   Credit: 600.01 YURT İÇİ SATIŞLAR 3900 TL
+
+4. GL hareket doğrulama (PE):
+   2 satır, banka ve alıcı karşılıklı düzgün.
+
+REFERANS BELGE NUMARALARI
+──────────────────────────
+Trip:  TRIP-2026-00135
+SI:    ACC-SINV-2026-00019
+PE:    ACC-PAY-2026-00012
+PNR:   PILOT001

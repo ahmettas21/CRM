@@ -1,0 +1,9 @@
+--- SCEN-BEE-016: Chargeback (Ters İbraz) ---
+✅ Original Invoice Created: ACC-SINV-2026-00016 | Total: 10000.0
+✅ Payment Received: ACC-PAY-2026-00011 | Outstanding became 0 TL
+✅ Chargeback Journal Entry Confirmed: ACC-JV-2026-00003 (-10250 TL Bankadan zorla düşüldü)
+
+--- Running Chargeback GL Assertions ---
+✅ P1: Customer successfully re-debited! AR report reflects new debt of 10000.0 TL perfectly.
+✅ P2: Bank Charge penalty (250.0 TL) correctly written off directly to P&L Expense account.
+🎉 ALL ASSERTS PASSED. Chargeback Architecture is Immutable and Stable!

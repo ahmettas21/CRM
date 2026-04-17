@@ -1,0 +1,69 @@
+PILOT-001 FAZ 3-4 — OTOMATIK REGRESYON SONUÇLARI
+=================================================
+Tarih: 2026-04-17
+Site: erpnext-production-1b2e.up.railway.app
+Script: tmp/run_pilot_001_phase3_4.py
+
+ÖN KONTROL
+──────────
+✅ Trip: TRIP-2026-00135 (docstatus=1, profit=400.0)
+✅ Original SI: ACC-SINV-2026-00019 (docstatus=1, grand_total=3900.0)
+✅ Customer: Mehmet Yılmaz
+✅ SI Outstanding (başlangıç): 0.0 TL
+
+FAZ 3: NO-SHOW VERGİ İADESİ (CREDIT NOTE)
+──────────────────────────────────────────
+✅ Orijinal SI Grand Total: 3900.0 TL (Submitted)
+✅ AIRPORT-TAX item zaten mevcut
+✅ Gelir hesabı: 600.01 - YURT İÇİ SATIŞLAR - IZGET
+✅ AR hesabı: 120.01 - ALICILAR - IZGET
+✅ Credit Note Draft: ACC-SINV-2026-00020
+✅ is_return: 1
+✅ return_against: ACC-SINV-2026-00019
+✅ CN Grand Total: -300.0 TL
+✅ CN Submitted (docstatus=1)
+✅ CN GL Entry sayısı: 2
+✅ CN GL Debit: 600.01 YURT İÇİ SATIŞLAR = 300.0 TL (Gelir iade)
+✅ CN GL Credit: 120.01 ALICILAR = 300.0 TL (AR düşürme)
+✅ Orijinal SI BOZULMADI: 3900.0 TL, Submitted
+✅ Müşteri AR bakiye (CN sonrası): -300.0 TL
+
+FAZ 4: İADE ÖDEMESİ (REFUND PAYMENT ENTRY)
+────────────────────────────────────────────
+✅ Banka hesabı: 102.01.001 - İŞ BANKASI 4846 - IZGET
+✅ İade PE Draft: ACC-PAY-2026-00013
+✅ İade PE Submitted
+✅ Refund PE GL Entry sayısı: 2
+✅ Refund GL Credit: 102.01.001 İŞ BANKASI 4846 = 300.0 TL
+✅ Refund GL Debit: 120.01 ALICILAR = 300.0 TL
+✅ Müşteri final AR bakiye: 0 TL
+✅ Net Gelir (SI + CN): 3600.0 TL (Beklenen: 3600.0)
+
+SONUÇ RAPORU
+─────────────
+✅ Orijinal SI bozulmadı:      3900.0 TL (Beklenen: 3900.0)
+✅ Orijinal SI docstatus:      1 (Beklenen: 1)
+✅ CN Grand Total:             -300.0 TL (Beklenen: -300.0)
+✅ CN is_return:               1 (Beklenen: 1)
+✅ CN GL Entries:              2 (Beklenen: ≥2)
+✅ Refund PE GL Entries:       2 (Beklenen: ≥2)
+✅ Müşteri Final Bakiye:       0 TL (Beklenen: 0)
+✅ Net Gelir (P&L):            3600.0 TL (Beklenen: 3600.0)
+
+🎉 TÜM KONTROLLER PASSED (8/8)
+
+REFERANS BELGE NUMARALARI
+──────────────────────────
+Orijinal SI:   ACC-SINV-2026-00019
+Credit Note:   ACC-SINV-2026-00020
+İade PE:       ACC-PAY-2026-00013
+PNR:           PILOT001
+
+GL ÖZETİ (TÜM BELGELER)
+─────────────────────────
+SI Submit:     Debit 120.01 ALICILAR 3900 → Credit 600.01 SATIŞLAR 3900
+PE Tahsilat:   Debit 102.01 İŞ BANKASI 3900 → Credit 120.01 ALICILAR 3900
+CN Submit:     Debit 600.01 SATIŞLAR 300 → Credit 120.01 ALICILAR 300
+PE İade:       Debit 120.01 ALICILAR 300 → Credit 102.01 İŞ BANKASI 300
+              ─────────────────────────────
+Net Gelir:     3600 TL | Net Banka: 3600 TL | AR: 0 TL ✅

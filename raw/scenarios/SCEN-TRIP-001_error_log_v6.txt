@@ -1,0 +1,2 @@
+frappe.exceptions.MandatoryError: [Trip]: supplier, direction, origin, destination, departure_date
+(Note: Flight segments require operational data even for finance logic tests)

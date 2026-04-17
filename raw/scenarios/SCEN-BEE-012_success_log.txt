@@ -1,0 +1,7 @@
+--- SCEN-BEE-012: Kısmi Kullanım (Pro-Rata İade) ---
+✅ Original Invoice: ACC-SINV-2026-00014 | Total: 11000.0 TL
+✅ Credit Note (Pro-Rata): ACC-SINV-2026-00015 | Oran: %40.0 | Total: -4400.0 (Beklenen: -4400.0 TL)
+
+--- Running Pro-Rata GL Assertions ---
+✅ P1: Customer Ledger Net Balance exactly 6600.0 TL. Pro-rata calculation flawlessly matched.
+🎉 ALL ASSERTS PASSED.

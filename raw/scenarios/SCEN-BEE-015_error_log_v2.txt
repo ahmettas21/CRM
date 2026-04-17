@@ -1,0 +1,1 @@
+frappe.exceptions.ValidationError: Following item UCAK-BILETI is not marked as purchase item. You can enable them as purchase item from its Item master
