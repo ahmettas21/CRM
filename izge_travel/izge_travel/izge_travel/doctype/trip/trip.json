@@ -8,29 +8,39 @@
  "is_submittable": 1,
  "field_order": [
   "naming_series",
+  "booking_date",
+  "column_break_b2",
   "booking_reference",
   "supplier_pnr",
-  "booking_date",
-  "column_break_basic",
+  "column_break_b3",
   "customer",
   "primary_traveler",
+  "column_break_b4",
   "pax_count",
+  "status",
   "section_classification",
   "product_type",
   "trip_scope",
   "column_break_class",
-  "status",
   "sales_owner",
   "office",
+  "section_segments",
+  "trip_flight_segments",
+  "section_hotels",
+  "trip_hotel_stays",
+  "section_services",
+  "trip_service_items",
+  "section_charges",
+  "trip_charges",
   "section_financial",
   "cost_amount",
   "base_service_amount",
+  "total_tax_amount",
   "column_break_fin",
   "extra_amount",
   "total_sale_amount",
-  "column_break_fin2",
   "profit",
-  "total_tax_amount",
+  "column_break_fin2",
   "service_fee_display",
   "currency",
   "section_payment",
@@ -46,15 +56,7 @@
   "customer_invoice_no",
   "column_break_inv",
   "supplier_invoice_no",
-  "amended_from",
-  "section_segments",
-  "trip_flight_segments",
-  "section_hotels",
-  "trip_hotel_stays",
-  "section_services",
-  "trip_service_items",
-  "section_charges",
-  "trip_charges"
+  "amended_from"
  ],
  "fields": [
   {
@@ -62,78 +64,73 @@
    "fieldtype": "Select",
    "label": "Naming Series",
    "options": "TRIP-.YYYY.-.#####",
-   "reqd": 1
+   "reqd": 1,
+   "idx": 1
+  },
+  {
+   "fieldname": "booking_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Rezervasyon Tarihi",
+   "reqd": 1,
+   "idx": 2
+  },
+  {
+   "fieldname": "column_break_b2",
+   "fieldtype": "Column Break",
+   "idx": 3
   },
   {
    "fieldname": "booking_reference",
    "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Booking Reference (PNR)",
+   "label": "PNR (Rezervasyon Kodu)",
    "reqd": 1,
-   "unique": 1
+   "unique": 1,
+   "idx": 4
   },
   {
    "fieldname": "supplier_pnr",
    "fieldtype": "Data",
-   "label": "Supplier PNR"
+   "label": "Tedarikçi PNR",
+   "idx": 5
   },
   {
-   "fieldname": "booking_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Booking Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "column_break_basic",
-   "fieldtype": "Column Break"
+   "fieldname": "column_break_b3",
+   "fieldtype": "Column Break",
+   "idx": 6
   },
   {
    "fieldname": "customer",
    "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Customer",
+   "label": "Müşteri",
    "options": "Customer",
-   "reqd": 1
+   "reqd": 1,
+   "idx": 7
   },
   {
    "fieldname": "primary_traveler",
    "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Primary Traveler",
-   "options": "Traveler"
+   "label": "Ana Yolcu",
+   "options": "Traveler",
+   "idx": 8
+  },
+  {
+   "fieldname": "column_break_b4",
+   "fieldtype": "Column Break",
+   "idx": 9
   },
   {
    "fieldname": "pax_count",
    "fieldtype": "Int",
-   "label": "Pax Count",
-   "default": "1"
-  },
-  {
-   "fieldname": "section_classification",
-   "fieldtype": "Section Break",
-   "label": "Classification"
-  },
-  {
-   "fieldname": "product_type",
-   "fieldtype": "Select",
-   "in_standard_filter": 1,
-   "label": "Product Type",
-   "options": "\nFlight\nHotel\nTransfer\nTrain\nVisa\nTour\nPackage\nOther"
-  },
-  {
-   "fieldname": "trip_scope",
-   "fieldtype": "Select",
-   "in_standard_filter": 1,
-   "label": "Trip Scope",
-   "options": "\nDomestic\nInternational"
-  },
-  {
-   "fieldname": "column_break_class",
-   "fieldtype": "Column Break"
+   "label": "Yolcu Sayısı",
+   "default": "1",
+   "idx": 10
   },
   {
    "default": "Draft",
@@ -141,229 +138,303 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Status",
+   "label": "Durumu",
    "options": "Draft\nNormal\nConfirmed\nCompleted\nCancelled\nRefunded\nVoid\nReissued",
-   "reqd": 1
+   "reqd": 1,
+   "idx": 11
+  },
+  {
+   "fieldname": "section_classification",
+   "fieldtype": "Section Break",
+   "label": "Sınıflandırma",
+   "hide_border": 1,
+   "idx": 12
+  },
+  {
+   "fieldname": "product_type",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Ürün Tipi",
+   "options": "\nFlight\nHotel\nTransfer\nTrain\nVisa\nTour\nPackage\nOther",
+   "idx": 13
+  },
+  {
+   "fieldname": "trip_scope",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Seyahat Kapsamı",
+   "options": "\nDomestic\nInternational",
+   "idx": 14
+  },
+  {
+   "fieldname": "column_break_class",
+   "fieldtype": "Column Break",
+   "idx": 15
   },
   {
    "fieldname": "sales_owner",
    "fieldtype": "Link",
    "in_standard_filter": 1,
-   "label": "Sales Owner",
-   "options": "User"
+   "label": "Satış Sorumlusu",
+   "options": "User",
+   "idx": 16
   },
   {
    "fieldname": "office",
    "fieldtype": "Select",
    "in_standard_filter": 1,
-   "label": "Office",
-   "options": "\nİZGE TURİZM 2018\nSANCAKTEPE 2018"
+   "label": "Ofis",
+   "options": "\nİZGE TURİZM 2018\nSANCAKTEPE 2018",
+   "idx": 17
+  },
+  {
+   "fieldname": "section_segments",
+   "fieldtype": "Section Break",
+   "label": "Uçuş Segmentleri",
+   "hide_border": 1,
+   "idx": 18,
+   "depends_on": "eval:doc.product_type == 'Flight'"
+  },
+  {
+   "fieldname": "trip_flight_segments",
+   "fieldtype": "Table",
+   "label": "Uçuş Segmentleri",
+   "options": "Trip Flight Segment",
+   "idx": 19
+  },
+  {
+   "fieldname": "section_hotels",
+   "fieldtype": "Section Break",
+   "label": "Otel Konaklamaları",
+   "collapsible": 1,
+   "hide_border": 1,
+   "idx": 20,
+   "depends_on": "eval:doc.product_type == 'Hotel'"
+  },
+  {
+   "fieldname": "trip_hotel_stays",
+   "fieldtype": "Table",
+   "label": "Otel Konaklamaları",
+   "options": "Trip Hotel Stay",
+   "idx": 21
+  },
+  {
+   "fieldname": "section_services",
+   "fieldtype": "Section Break",
+   "label": "Hizmetler (Vize, Tur, Transfer vb.)",
+   "collapsible": 1,
+   "hide_border": 1,
+   "idx": 22,
+   "depends_on": "eval:in_list(['Transfer', 'Train', 'Visa', 'Tour', 'Package', 'Other'], doc.product_type)"
+  },
+  {
+   "fieldname": "trip_service_items",
+   "fieldtype": "Table",
+   "label": "Hizmet Kalemleri",
+   "options": "Trip Service Item",
+   "idx": 23
+  },
+  {
+   "fieldname": "section_charges",
+   "fieldtype": "Section Break",
+   "label": "Ekstra Ücretler",
+   "collapsible": 1,
+   "hide_border": 1,
+   "idx": 24
+  },
+  {
+   "fieldname": "trip_charges",
+   "fieldtype": "Table",
+   "label": "Ekstra Ücretler",
+   "options": "Trip Charge",
+   "idx": 25
   },
   {
    "fieldname": "section_financial",
    "fieldtype": "Section Break",
-   "label": "Financial Details"
+   "label": "Finansal Detaylar",
+   "hide_border": 1,
+   "idx": 26
   },
   {
    "fieldname": "cost_amount",
    "fieldtype": "Currency",
-   "label": "Cost Amount (Paid to Supplier)",
+   "label": "Maliyet (Tedarikçiye Ödenen)",
    "options": "currency",
-   "read_only": 1
+   "read_only": 1,
+   "idx": 27
   },
   {
    "fieldname": "base_service_amount",
    "fieldtype": "Currency",
-   "label": "Service Fee",
-   "options": "currency",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_fin",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "extra_amount",
-   "fieldtype": "Currency",
-   "label": "Extra Amount",
-   "options": "currency",
-   "read_only": 1
-  },
-  {
-   "fieldname": "total_sale_amount",
-   "fieldtype": "Currency",
-   "label": "Total Sale",
-   "options": "currency",
-   "in_list_view": 1,
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_fin2",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "profit",
-   "fieldtype": "Currency",
-   "label": "Profit",
+   "label": "Hizmet Bedeli",
    "options": "currency",
    "read_only": 1,
-   "in_list_view": 1
+   "idx": 28
   },
   {
    "fieldname": "total_tax_amount",
    "fieldtype": "Currency",
-   "label": "Total Tax Amount",
+   "label": "Toplam Vergi",
    "options": "currency",
-   "read_only": 1
+   "read_only": 1,
+   "idx": 29
+  },
+  {
+   "fieldname": "column_break_fin",
+   "fieldtype": "Column Break",
+   "idx": 30
+  },
+  {
+   "fieldname": "extra_amount",
+   "fieldtype": "Currency",
+   "label": "Ekstra Tutar",
+   "options": "currency",
+   "read_only": 1,
+   "idx": 31
+  },
+  {
+   "fieldname": "total_sale_amount",
+   "fieldtype": "Currency",
+   "label": "Toplam Satış Tutarı",
+   "options": "currency",
+   "in_list_view": 1,
+   "read_only": 1,
+   "idx": 32
+  },
+  {
+   "fieldname": "profit",
+   "fieldtype": "Currency",
+   "label": "Kâr",
+   "options": "currency",
+   "read_only": 1,
+   "in_list_view": 1,
+   "idx": 33
+  },
+  {
+   "fieldname": "column_break_fin2",
+   "fieldtype": "Column Break",
+   "idx": 34
   },
   {
    "default": "Hidden (Inside Sale)",
    "fieldname": "service_fee_display",
    "fieldtype": "Select",
-   "label": "Service Fee Display",
-   "options": "Hidden (Inside Sale)\nVisible (Separate Item)"
+   "label": "Hizmet Bedeli Gösterimi",
+   "options": "Hidden (Inside Sale)\nVisible (Separate Item)",
+   "idx": 35
   },
   {
    "fieldname": "currency",
    "fieldtype": "Link",
-   "label": "Currency",
+   "label": "Para Birimi",
    "options": "Currency",
-   "default": "TRY"
+   "default": "TRY",
+   "idx": 36
   },
   {
    "fieldname": "section_payment",
    "fieldtype": "Section Break",
-   "label": "Payment & Billing"
+   "label": "Ödeme ve Faturalandırma",
+   "hide_border": 1,
+   "idx": 37
   },
   {
    "fieldname": "payment_method",
    "fieldtype": "Select",
-   "label": "Payment Method",
+   "label": "Ödeme Yöntemi",
    "in_list_view": 1,
-   "options": "\nCash\nCredit Card\nBank Transfer\nCredit (Vadeli)\nSplit"
+   "options": "\nCash\nCredit Card\nBank Transfer\nCredit (Vadeli)\nSplit",
+   "idx": 38
   },
   {
    "fieldname": "payment_status",
    "fieldtype": "Select",
-   "label": "Payment Status",
+   "label": "Ödeme Durumu",
    "options": "Unpaid\nPartially Paid\nPaid",
    "default": "Unpaid",
    "read_only": 1,
-   "in_list_view": 1
+   "in_list_view": 1,
+   "idx": 39
   },
   {
    "fieldname": "column_break_pay",
-   "fieldtype": "Column Break"
+   "fieldtype": "Column Break",
+   "idx": 40
   },
   {
    "fieldname": "payment_due_date",
    "fieldtype": "Date",
-   "label": "Payment Due Date"
+   "label": "Son Ödeme Tarihi",
+   "idx": 41
   },
   {
    "fieldname": "payment_terms_template",
    "fieldtype": "Link",
-   "label": "Payment Terms",
-   "options": "Payment Terms Template"
+   "label": "Ödeme Şartları Şablonu",
+   "options": "Payment Terms Template",
+   "idx": 42
   },
   {
    "fieldname": "cc_bank",
    "fieldtype": "Select",
-   "label": "Credit Card Bank",
+   "label": "Kredi Kartı Bankası",
    "options": "\nGaranti BBVA\nİş Bankası\nYapı Kredi\nAkbank\nZiraat Bankası\nHalkbank\nVakıfbank\nQNB Finansbank\nDenizbank\nTEB\nDiğer",
-   "depends_on": "eval:doc.payment_method=='Credit Card'"
+   "depends_on": "eval:doc.payment_method=='Credit Card'",
+   "idx": 43
   },
   {
    "fieldname": "cc_commission_rate",
    "fieldtype": "Percent",
-   "label": "CC Commission Rate (%)",
+   "label": "KK Komisyon Oranı (%)",
    "default": "2.5",
-   "depends_on": "eval:doc.payment_method=='Credit Card'"
+   "depends_on": "eval:doc.payment_method=='Credit Card'",
+   "idx": 44
   },
   {
    "fieldname": "cc_commission_amount",
    "fieldtype": "Currency",
-   "label": "CC Commission Amount",
+   "label": "KK Komisyon Tutarı",
    "options": "currency",
    "read_only": 1,
-   "depends_on": "eval:doc.payment_method=='Credit Card'"
+   "depends_on": "eval:doc.payment_method=='Credit Card'",
+   "idx": 45
   },
   {
    "fieldname": "section_invoicing",
    "fieldtype": "Section Break",
-   "label": "Invoice References",
-   "collapsible": 1
+   "label": "Fatura Referansları",
+   "collapsible": 1,
+   "hide_border": 1,
+   "idx": 46
   },
   {
    "fieldname": "customer_invoice_no",
    "fieldtype": "Data",
-   "label": "Customer Invoice No"
+   "label": "Müşteri Fatura No",
+   "idx": 47
   },
   {
    "fieldname": "column_break_inv",
-   "fieldtype": "Column Break"
+   "fieldtype": "Column Break",
+   "idx": 48
   },
   {
    "fieldname": "supplier_invoice_no",
    "fieldtype": "Data",
-   "label": "Supplier Invoice No"
+   "label": "Tedarikçi Fatura No",
+   "idx": 49
   },
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
-   "label": "Amended From",
+   "label": "Değiştirilen",
    "no_copy": 1,
    "options": "Trip",
    "print_hide": 1,
    "read_only": 1,
-   "search_index": 1
-  },
-  {
-   "fieldname": "section_segments",
-   "fieldtype": "Section Break",
-   "label": "Flight Segments"
-  },
-  {
-   "fieldname": "trip_flight_segments",
-   "fieldtype": "Table",
-   "label": "Flight Segments",
-   "options": "Trip Flight Segment"
-  },
-  {
-   "fieldname": "section_hotels",
-   "fieldtype": "Section Break",
-   "label": "Hotel Stays",
-   "collapsible": 1
-  },
-  {
-   "fieldname": "trip_hotel_stays",
-   "fieldtype": "Table",
-   "label": "Hotel Stays",
-   "options": "Trip Hotel Stay"
-  },
-  {
-   "fieldname": "section_services",
-   "fieldtype": "Section Break",
-   "label": "Services (Visa, Tour, Transfer, etc)",
-   "collapsible": 1
-  },
-  {
-   "fieldname": "trip_service_items",
-   "fieldtype": "Table",
-   "label": "Service Items",
-   "options": "Trip Service Item"
-  },
-  {
-   "fieldname": "section_charges",
-   "fieldtype": "Section Break",
-   "label": "Additional Charges",
-   "collapsible": 1
-  },
-  {
-   "fieldname": "trip_charges",
-   "fieldtype": "Table",
-   "label": "Trip Charges",
-   "options": "Trip Charge"
+   "search_index": 1,
+   "idx": 50
   }
  ],
  "index_web_pages_for_search": 1,

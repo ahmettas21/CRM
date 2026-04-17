@@ -310,3 +310,58 @@ function calculate_cc_commission(frm) {
 		frm.set_value('cc_commission_amount', 0);
 	}
 }
+frappe.ui.form.on('Trip', {
+    booking_reference: function(frm) {
+        if (frm.doc.booking_reference) {
+            frm.set_value('booking_reference', frm.doc.booking_reference.toUpperCase());
+        }
+    },
+    supplier_pnr: function(frm) {
+        if (frm.doc.supplier_pnr) {
+            frm.set_value('supplier_pnr', frm.doc.supplier_pnr.toUpperCase());
+        }
+    },
+    sales_owner: function(frm) {
+        if (frm.doc.sales_owner) {
+            frm.set_value('sales_owner', frm.doc.sales_owner.toLowerCase());
+        }
+    }
+});
+
+frappe.ui.form.on('Trip Flight Segment', {
+    flight_no: function(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        if(row.flight_no) frappe.model.set_value(cdt, cdn, 'flight_no', row.flight_no.toUpperCase());
+    },
+    origin: function(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        if(row.origin) frappe.model.set_value(cdt, cdn, 'origin', row.origin.toUpperCase());
+    },
+    destination: function(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        if(row.destination) frappe.model.set_value(cdt, cdn, 'destination', row.destination.toUpperCase());
+    },
+    supplier_locator: function(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        if(row.supplier_locator) frappe.model.set_value(cdt, cdn, 'supplier_locator', row.supplier_locator.toUpperCase());
+    },
+     ticket_no: function(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        if(row.ticket_no) frappe.model.set_value(cdt, cdn, 'ticket_no', row.ticket_no.toUpperCase());
+    }
+});
+
+frappe.ui.form.on('Trip Hotel Stay', {
+	hotel_name: function(frm, cdt, cdn) {
+		let row = locals[cdt][cdn];
+		// Ilk harfleri buyut (Title Case)
+		if(row.hotel_name) {
+			let newVal = row.hotel_name.replace(/\\w\\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+			frappe.model.set_value(cdt, cdn, 'hotel_name', newVal);
+		}
+	},
+    supplier_locator: function(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        if(row.supplier_locator) frappe.model.set_value(cdt, cdn, 'supplier_locator', row.supplier_locator.toUpperCase());
+    }
+});

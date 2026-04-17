@@ -5,101 +5,155 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "sb_operasyon",
   "hotel_name",
-  "supplier",
-  "supplier_locator",
   "check_in_date",
-  "check_in_time",
   "check_out_date",
+  "cb_op1",
+  "supplier",
+  "check_in_time",
   "check_out_time",
-  "voucher_no",
+  "cb_op2",
   "traveler",
+  "voucher_no",
+  "supplier_locator",
+  "sb_finans",
   "cost_amount",
   "tax_amount",
+  "cb_fin1",
   "service_amount",
   "extra_amount",
+  "cb_fin2",
   "sale_amount"
  ],
  "fields": [
   {
+   "fieldname": "sb_operasyon",
+   "fieldtype": "Section Break",
+   "label": "🏨 Konaklama Özeti",
+   "idx": 1,
+   "hide_border": 1
+  },
+  {
    "fieldname": "hotel_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Hotel Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "supplier",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Supplier",
-   "options": "Supplier"
-  },
-  {
-   "fieldname": "supplier_locator",
-   "fieldtype": "Data",
-   "label": "Supplier Locator"
+   "label": "Otel Adı",
+   "reqd": 1,
+   "idx": 2
   },
   {
    "fieldname": "check_in_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Check In Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "check_in_time",
-   "fieldtype": "Time",
-   "label": "Check In Time"
+   "label": "Giriş Tarihi",
+   "reqd": 1,
+   "idx": 3
   },
   {
    "fieldname": "check_out_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Check Out Date",
-   "reqd": 1
+   "label": "Çıkış Tarihi",
+   "reqd": 1,
+   "idx": 4
+  },
+  {
+   "fieldname": "cb_op1",
+   "fieldtype": "Column Break",
+   "idx": 5
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Tedarikçi",
+   "options": "Supplier",
+   "idx": 6
+  },
+  {
+   "fieldname": "check_in_time",
+   "fieldtype": "Time",
+   "label": "Giriş Saati",
+   "idx": 7
   },
   {
    "fieldname": "check_out_time",
    "fieldtype": "Time",
-   "label": "Check Out Time"
+   "label": "Çıkış Saati",
+   "idx": 8
   },
   {
-   "fieldname": "voucher_no",
-   "fieldtype": "Data",
-   "label": "Voucher No"
+   "fieldname": "cb_op2",
+   "fieldtype": "Column Break",
+   "idx": 9
   },
   {
    "fieldname": "traveler",
    "fieldtype": "Link",
-   "label": "Traveler",
-   "options": "Traveler"
+   "label": "Yolcu",
+   "options": "Traveler",
+   "idx": 10
+  },
+  {
+   "fieldname": "voucher_no",
+   "fieldtype": "Data",
+   "label": "Voucher No",
+   "idx": 11
+  },
+  {
+   "fieldname": "supplier_locator",
+   "fieldtype": "Data",
+   "label": "Tedarikçi PNR",
+   "idx": 12
+  },
+  {
+   "fieldname": "sb_finans",
+   "fieldtype": "Section Break",
+   "label": "💰 Finansal Detaylar",
+   "idx": 13,
+   "hide_border": 1
   },
   {
    "fieldname": "cost_amount",
    "fieldtype": "Currency",
-   "label": "Cost Amount"
+   "label": "Maliyet",
+   "idx": 14
   },
   {
    "fieldname": "tax_amount",
    "fieldtype": "Currency",
-   "label": "Tax Amount"
+   "label": "Vergi Tutarı",
+   "idx": 15
+  },
+  {
+   "fieldname": "cb_fin1",
+   "fieldtype": "Column Break",
+   "idx": 16
   },
   {
    "fieldname": "service_amount",
    "fieldtype": "Currency",
-   "label": "Service Fee"
+   "label": "Hizmet Bedeli",
+   "idx": 17
   },
   {
    "fieldname": "extra_amount",
    "fieldtype": "Currency",
-   "label": "Extra Amount"
+   "label": "Ekstra Tutar",
+   "idx": 18
+  },
+  {
+   "fieldname": "cb_fin2",
+   "fieldtype": "Column Break",
+   "idx": 19
   },
   {
    "fieldname": "sale_amount",
    "fieldtype": "Currency",
-   "label": "Sale Amount",
-   "in_list_view": 1
+   "label": "Satış Tutarı",
+   "in_list_view": 1,
+   "idx": 20
   }
  ],
  "index_web_pages_for_search": 1,

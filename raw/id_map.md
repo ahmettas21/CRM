@@ -15,6 +15,17 @@ Bu dosya, projedeki tüm kural, ders ve teknik dökümanların **rastgele, benze
 - **[RULE-V7W8X]**: Altın PIP Protokolü (Subfolder Rule)
 - **[RULE-Z9A0B]**: Benzersiz Kimlik Protokolü (Unique ID Protocol)
 - **[RULE-C1D2E]**: UTF-8 Karakter Koruma (Encoding Shield)
+- **[RULE-M9C2P]**: Üstün Araç Kontrolü (MCP Supremacy)
+- **[RULE-F5S9L]**: Birleşik Finansal Motor (Unified Financial Engine)
+
+### 🎨 Arayüz & Kullanıcı Deneyimi (UI/UX)
+- **[RULE-F8G9T]**: Kompakt Modal Mimarisi
+- **[RULE-K4L5P]**: Hızlı Giriş (Quick Entry) Zorunluluğu
+- **[RULE-V2W3N]**: Emojili Başlık Kuralı
+- **[RULE-Q6R7M]**: Dinamik Metin Formatlama (Live UX Formatting)
+- **[RULE-X9Y8Z]**: Master Data (Referans) Standardı
+- **[RULE-D4B7C]**: İngilizce Mutasyon Kuralı (IATA Strict)
+- **[RULE-P1A2M]**: Akıllı Klonlama (+1 Duplicate Engine)
 
 ## 🧠 Hafıza & Tecrübe (Memory - [MEM-XXXXX])
 
@@ -27,7 +38,10 @@ Bu dosya, projedeki tüm kural, ders ve teknik dökümanların **rastgele, benze
 - **[PROC-C9K8X]**: Cloud & Deployment Operasyon Merkezi (`wiki/cloud.md`)
 - **[TECH-F3M2Y]**: Frappe Uygulama Yapı Standardı (`raw/frappe_structure.md`)
 - **[INFRA-A1B9Z]**: Altyapı Referansı (`raw/infrastructure.md`)
+- **[TECH-M4C1P]**: MCP Kurulum ve Konfigürasyon (`raw/mcp_setup.md`)
 - **[KNOW-M7L5Q]**: Muhasebe Teknik Diyalogları (`raw/muhasebekonusması.md`)
+- **[TECH-T3R9P]**: Seyahat Modülü Modernizasyonu (`raw/trip_modernization.md`)
+- **[UI-UX-GUIDE]**: Proje Tasarım ve UI Referansları (`raw/ui_ux_standards.md`)
 
 28:
 29: ## 🧭 Navigasyon & Durum (Navigation - [NAV-XXXXX])
@@ -35,6 +49,7 @@ Bu dosya, projedeki tüm kural, ders ve teknik dökümanların **rastgele, benze
 31: - **[GOAL-M4N5O]**: Mission Control (`wiki/mission_control.md`)
 32: - **[LOG-S9T0U]**: Değişim Günlüğü (`wiki/log.md`)
 33: - **[OATH-P7Q8R]**: AI Sadakat Yemini (`wiki/oath.md`)
+34: - **[NAV-A3G2T]**: MCP ve Ajan Rehberi (`wiki/mcp_agents.md`)
 34:
 35: ## 🛠️ Yetenekler (Skills - [SKILL-XXXXX])
 
@@ -57,3 +72,9 @@ Bu dosya, projedeki tüm kural, ders ve teknik dökümanların **rastgele, benze
 
 🛠️ Yetenekler (Skills)
 [SKILL-F7G1H] [SKILL-D2S9W] [SKILL-K4L1J] [SKILL-R9T2M]
+
+## 🎭 Senaryolar & Testler (Scenarios - [SCEN-XXXXX])
+
+- **[SCEN-PLAN-001]**: Senaryo Planlama ve Yönetimi Merkezi (`wiki/scenarios/index.md`)
+- **[SCEN-BEE-001]**: Bee Akademi KOLAY BİLET Test Senaryosu (`raw/scenarios/SCEN_001_BEE.md`)
+- **[SCEN-RESULTS]**: Senaryo Test Sonuçları Arşivi (`raw/scenarios/results.md`)

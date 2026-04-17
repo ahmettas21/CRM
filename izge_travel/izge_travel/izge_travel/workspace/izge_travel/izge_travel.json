@@ -1,6 +1,6 @@
- {
+{
   "charts": [],
-  "content": "[{\"type\":\"header\",\"data\":{\"text\":\"\\u2708\\ufe0f H\\u0131zl\\u0131 Eri\\u015fim\",\"level\":4}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Yeni Rezervasyon\",\"icon\":\"add\",\"link_to\":\"Trip\",\"doc_view\":\"New\",\"type\":\"DocType\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Trip Listesi\",\"icon\":\"list\",\"link_to\":\"Trip\",\"type\":\"DocType\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Yeni Yolcu\",\"icon\":\"user\",\"link_to\":\"Traveler\",\"doc_view\":\"New\",\"type\":\"DocType\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Yolcu Listesi\",\"icon\":\"users\",\"link_to\":\"Traveler\",\"type\":\"DocType\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Aqua Import\",\"icon\":\"upload\",\"link_to\":\"Aqua Importer\",\"doc_view\":\"New\",\"type\":\"DocType\"}},{\"type\":\"header\",\"data\":{\"text\":\"\\ud83d\\udcb0 Muhasebe\",\"level\":4}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Yeni Sat\\u0131\\u015f Faturas\\u0131\",\"icon\":\"file-plus\",\"link_to\":\"Sales Invoice\",\"doc_view\":\"New\",\"type\":\"DocType\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Sat\\u0131\\u015f Faturalar\\u0131\",\"icon\":\"file\",\"link_to\":\"Sales Invoice\",\"type\":\"DocType\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Yeni Al\\u0131\\u015f Faturas\\u0131\",\"icon\":\"money\",\"link_to\":\"Purchase Invoice\",\"doc_view\":\"New\",\"type\":\"DocType\"}},{\"type\":\"shortcut\",\"data\":{\"label\":\"Al\\u0131\\u015f Faturalar\\u0131\",\"icon\":\"bank\",\"link_to\":\"Purchase Invoice\",\"type\":\"DocType\"}},{\"type\":\"header\",\"data\":{\"text\":\"\\ud83d\\udcca Raporlar\",\"level\":4}},{\"type\":\"link\",\"data\":{\"label\":\"Trip K\\u00e2rl\\u0131l\\u0131k\",\"link_to\":\"Trip Profitability\",\"link_type\":\"Report\",\"type\":\"Link\"}},{\"type\":\"link\",\"data\":{\"label\":\"Tedarik\\u00e7i Mutabakat\",\"link_to\":\"Supplier Reconciliation Report\",\"link_type\":\"Report\",\"type\":\"Link\"}},{\"type\":\"link\",\"data\":{\"label\":\"G\\u00fcnl\\u00fck Sat\\u0131\\u015f \\u00d6zeti\",\"link_to\":\"Daily Sales Summary\",\"link_type\":\"Report\",\"type\":\"Link\"}},{\"type\":\"header\",\"data\":{\"text\":\"\\u2699\\ufe0f Y\\u00f6netim\",\"level\":4}},{\"type\":\"link\",\"data\":{\"label\":\"M\\u00fc\\u015fteriler\",\"link_to\":\"Customer\",\"link_type\":\"DocType\",\"type\":\"Link\"}},{\"type\":\"link\",\"data\":{\"label\":\"Tedarik\\u00e7iler\",\"link_to\":\"Supplier\",\"link_type\":\"DocType\",\"type\":\"Link\"}}]",
+  "content": "[{\"id\":\"h1\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>\\u2708\\ufe0f H\\u0131zl\\u0131 Eri\\u015fim</b></span>\",\"col\":12}},{\"id\":\"s1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Yeni Rezervasyon\",\"col\":3}},{\"id\":\"s2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Trip Listesi\",\"col\":3}},{\"id\":\"s3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Yeni Yolcu\",\"col\":3}},{\"id\":\"s4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Yolcu Listesi\",\"col\":3}},{\"id\":\"s5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Aqua Import\",\"col\":3}},{\"id\":\"h2\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>\\ud83d\\udcb0 Muhasebe</b></span>\",\"col\":12}},{\"id\":\"s6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Yeni Sat\\u0131\\u015f Faturas\\u0131\",\"col\":3}},{\"id\":\"s7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sat\\u0131\\u015f Faturalar\\u0131\",\"col\":3}},{\"id\":\"s8\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Yeni Al\\u0131\\u015f Faturas\\u0131\",\"col\":3}},{\"id\":\"s9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Al\\u0131\\u015f Faturalar\\u0131\",\"col\":3}},{\"id\":\"h3\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>\\ud83d\\udcca Raporlar</b></span>\",\"col\":12}},{\"id\":\"s10\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Trip K\\u00e2rl\\u0131l\\u0131k\",\"col\":4}},{\"id\":\"s11\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tedarik\\u00e7i Mutabakat\",\"col\":4}},{\"id\":\"s12\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"G\\u00fcnl\\u00fck Sat\\u0131\\u015f \\u00d6zeti\",\"col\":4}},{\"id\":\"h4\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>\\u2699\\ufe0f Y\\u00f6netim</b></span>\",\"col\":12}},{\"id\":\"s13\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"M\\u00fc\\u015fteriler\",\"col\":3}},{\"id\":\"s14\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tedarik\\u00e7iler\",\"col\":3}}]",
   "creation": "2026-04-14 23:00:00.000000",
   "docstatus": 0,
   "doctype": "Workspace",
@@ -9,13 +9,7 @@
   "is_default": 0,
   "is_standard": 1,
   "label": "Izge Travel",
-  "links": [
-   {"label": "Trip Kârlılık", "link_to": "Trip Profitability", "link_type": "Report", "type": "Link"},
-   {"label": "Tedarikçi Mutabakat", "link_to": "Supplier Reconciliation Report", "link_type": "Report", "type": "Link"},
-   {"label": "Günlük Satış Özeti", "link_to": "Daily Sales Summary", "link_type": "Report", "type": "Link"},
-   {"label": "Müşteriler", "link_to": "Customer", "link_type": "DocType", "type": "Link"},
-   {"label": "Tedarikçiler", "link_to": "Supplier", "link_type": "DocType", "type": "Link"}
-  ],
+  "links": [],
   "modified": "2026-04-15 01:30:00.000000",
   "modified_by": "Administrator",
   "module": "Izge Travel",
@@ -26,15 +20,20 @@
   "quick_lists": [],
   "sequence_id": 1,
   "shortcuts": [
-   {"label": "Yeni Rezervasyon", "link_to": "Trip", "type": "DocType", "doc_view": "New", "icon": "add"},
-   {"label": "Trip Listesi", "link_to": "Trip", "type": "DocType", "icon": "list"},
-   {"label": "Yeni Yolcu", "link_to": "Traveler", "type": "DocType", "doc_view": "New", "icon": "user"},
-   {"label": "Yolcu Listesi", "link_to": "Traveler", "type": "DocType", "icon": "users"},
-   {"label": "Aqua Import", "link_to": "Aqua Importer", "type": "DocType", "doc_view": "New", "icon": "upload"},
-   {"label": "Yeni Satış Faturası", "link_to": "Sales Invoice", "type": "DocType", "doc_view": "New", "icon": "file-plus"},
-   {"label": "Satış Faturaları", "link_to": "Sales Invoice", "type": "DocType", "icon": "file"},
-   {"label": "Yeni Alış Faturası", "link_to": "Purchase Invoice", "type": "DocType", "doc_view": "New", "icon": "money"},
-   {"label": "Alış Faturaları", "link_to": "Purchase Invoice", "type": "DocType", "icon": "bank"}
+    {"label": "Yeni Rezervasyon", "link_to": "Trip", "type": "DocType", "doc_view": "New", "icon": "add"},
+    {"label": "Trip Listesi", "link_to": "Trip", "type": "DocType", "icon": "list"},
+    {"label": "Yeni Yolcu", "link_to": "Traveler", "type": "DocType", "doc_view": "New", "icon": "user"},
+    {"label": "Yolcu Listesi", "link_to": "Traveler", "type": "DocType", "icon": "users"},
+    {"label": "Aqua Import", "link_to": "Aqua Importer", "type": "DocType", "doc_view": "New", "icon": "upload"},
+    {"label": "Yeni Satış Faturası", "link_to": "Sales Invoice", "type": "DocType", "doc_view": "New", "icon": "file-plus"},
+    {"label": "Satış Faturaları", "link_to": "Sales Invoice", "type": "DocType", "icon": "file"},
+    {"label": "Yeni Alış Faturası", "link_to": "Purchase Invoice", "type": "DocType", "doc_view": "New", "icon": "money"},
+    {"label": "Alış Faturaları", "link_to": "Purchase Invoice", "type": "DocType", "icon": "bank"},
+    {"label": "Trip Kârlılık", "link_to": "Trip Profitability", "type": "Report", "icon": "report"},
+    {"label": "Tedarikçi Mutabakat", "link_to": "Supplier Reconciliation Report", "type": "Report", "icon": "report"},
+    {"label": "Günlük Satış Özeti", "link_to": "Daily Sales Summary", "type": "Report", "icon": "report"},
+    {"label": "Müşteriler", "link_to": "Customer", "type": "DocType", "icon": "users"},
+    {"label": "Tedarikçiler", "link_to": "Supplier", "type": "DocType", "icon": "users"}
   ],
   "title": "Izge Travel"
- }
+}

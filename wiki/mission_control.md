@@ -8,10 +8,10 @@ Bu sayfa, projenin ana hedeflerini ve o anki odak noktasını takip eder.
 3. [ ] **Duty of Care & Operasyon**: Konum takibi, seyahat ayakları ve vize entegrasyonu süreçlerinin kodlanması.
 4. [ ] **Sistem Optimize & Yedekleme**: Kalıcı veri saklama (Volume backups) ve otomatik GitHub deployment akışının iyileştirilmesi.
 
-## 📡 Mevcut Durum (v2.0)
+## 📡 Mevcut Durum (v3.0)
 - **Aktif Site:** `erpnext-production-1b2e.up.railway.app`
 - **Modül:** `izge_travel` (GitHub: `ahmettas21/CRM`)
-- **Odak Noktası:** [BUG-X1Z5P] Menü görünmeme sorunu (Workspace Meta Sync) gideriliyor.
+- **Odak Noktası:** [TECH-T3R9P] Seyahat Modülü Modernizasyonu ve Finansal Motor başarıyla yayına alındı.
 
 ## 🚦 Durum Panosu
 | Görev | Durum | Öncelik |
@@ -19,5 +19,7 @@ Bu sayfa, projenin ana hedeflerini ve o anki odak noktasını takip eder.
 | Railway Stabilization | ✅ Tamamlandı | - |
 | Custom App Scaffold | ✅ Tamamlandı | - |
 | DocType Logic & UI | ✅ Tamamlandı | - |
-| Duty of Care Features | 🔄 Başlıyoruz | Yüksek |
+| **Trip Module Modernization** | ✅ Tamamlandı | **Yüksek** |
+| **Unified Finance Engine** | ✅ Tamamlandı | **Kritik** |
+| Duty of Care Features | ⏳ Sırada | Yüksek |
 | Visa World Integration | ⏳ Sırada | Orta |

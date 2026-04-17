@@ -5,134 +5,179 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "traveler",
+  "sb_operasyon",
   "service_category",
   "service_name",
-  "supplier",
-  "supplier_locator",
-  "column_break_basic",
   "start_date",
-  "start_time",
   "end_date",
-  "end_time",
+  "cb_op1",
   "origin",
   "destination",
-  "section_break_fin",
+  "start_time",
+  "end_time",
+  "cb_op2",
+  "traveler",
+  "supplier",
+  "supplier_locator",
+  "sb_finans",
   "cost_amount",
   "tax_amount",
+  "cb_fin1",
   "service_amount",
   "extra_amount",
+  "cb_fin2",
   "sale_amount"
  ],
  "fields": [
   {
-   "fieldname": "traveler",
-   "fieldtype": "Link",
-   "label": "Traveler",
-   "options": "Traveler",
-   "in_list_view": 1
+   "fieldname": "sb_operasyon",
+   "fieldtype": "Section Break",
+   "label": "🏷️ Hizmet Özeti",
+   "idx": 1,
+   "hide_border": 1
   },
   {
    "fieldname": "service_category",
    "fieldtype": "Select",
-   "label": "Service Category",
+   "label": "Hizmet Kategorisi",
    "options": "Visa\nTransfer\nTour\nCar Rental\nInsurance\nTrain\nBus\nCruise\nPrivate Jet\nOther",
-   "in_list_view": 1
+   "in_list_view": 1,
+   "idx": 2
   },
   {
    "fieldname": "service_name",
    "fieldtype": "Data",
-   "label": "Service Name",
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "supplier",
-   "fieldtype": "Link",
-   "label": "Supplier",
-   "options": "Supplier",
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "supplier_locator",
-   "fieldtype": "Data",
-   "label": "Supplier PNR/Reference"
-  },
-  {
-   "fieldname": "column_break_basic",
-   "fieldtype": "Column Break"
+   "label": "Hizmet Adı",
+   "in_list_view": 1,
+   "idx": 3
   },
   {
    "fieldname": "start_date",
    "fieldtype": "Date",
-   "label": "Start/Pick-up Date",
-   "in_list_view": 1
-  },
-  {
-   "fieldname": "start_time",
-   "fieldtype": "Time",
-   "label": "Start/Pick-up Time"
+   "label": "Başlangıç Tarihi",
+   "in_list_view": 1,
+   "idx": 4
   },
   {
    "fieldname": "end_date",
    "fieldtype": "Date",
-   "label": "End/Drop-off Date"
+   "label": "Bitiş Tarihi",
+   "idx": 5
   },
   {
-   "fieldname": "end_time",
-   "fieldtype": "Time",
-   "label": "End/Drop-off Time"
+   "fieldname": "cb_op1",
+   "fieldtype": "Column Break",
+   "idx": 6
   },
   {
    "fieldname": "origin",
    "fieldtype": "Data",
-   "label": "Origin/Pick-up Location"
+   "label": "Kalkış / Alış Noktası",
+   "idx": 7
   },
   {
    "fieldname": "destination",
    "fieldtype": "Data",
-   "label": "Destination/Drop-off Location"
+   "label": "Varış / Bırakış Noktası",
+   "idx": 8
   },
   {
-   "fieldname": "section_break_fin",
+   "fieldname": "start_time",
+   "fieldtype": "Time",
+   "label": "Başlangıç Saati",
+   "idx": 9
+  },
+  {
+   "fieldname": "end_time",
+   "fieldtype": "Time",
+   "label": "Bitiş Saati",
+   "idx": 10
+  },
+  {
+   "fieldname": "cb_op2",
+   "fieldtype": "Column Break",
+   "idx": 11
+  },
+  {
+   "fieldname": "traveler",
+   "fieldtype": "Link",
+   "label": "Yolcu",
+   "options": "Traveler",
+   "in_list_view": 1,
+   "idx": 12
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Tedarikçi",
+   "options": "Supplier",
+   "in_list_view": 1,
+   "idx": 13
+  },
+  {
+   "fieldname": "supplier_locator",
+   "fieldtype": "Data",
+   "label": "Tedarikçi Ref",
+   "idx": 14
+  },
+  {
+   "fieldname": "sb_finans",
    "fieldtype": "Section Break",
-   "label": "Financials"
+   "label": "💰 Finansal Detaylar",
+   "idx": 15,
+   "hide_border": 1
   },
   {
    "fieldname": "cost_amount",
    "fieldtype": "Currency",
-   "label": "Cost Amount",
+   "label": "Maliyet",
    "options": "currency",
    "default": "0",
-   "in_list_view": 1
+   "in_list_view": 1,
+   "idx": 16
   },
   {
    "fieldname": "tax_amount",
    "fieldtype": "Currency",
-   "label": "Tax Amount",
+   "label": "Vergi Tutarı",
    "options": "currency",
-   "default": "0"
+   "default": "0",
+   "idx": 17
+  },
+  {
+   "fieldname": "cb_fin1",
+   "fieldtype": "Column Break",
+   "idx": 18
   },
   {
    "fieldname": "service_amount",
    "fieldtype": "Currency",
-   "label": "Service Fee",
+   "label": "Hizmet Bedeli",
    "options": "currency",
-   "default": "0"
+   "default": "0",
+   "idx": 19
   },
   {
    "fieldname": "extra_amount",
    "fieldtype": "Currency",
-   "label": "Extra Bedel",
+   "label": "Ekstra Tutar",
    "options": "currency",
-   "default": "0"
+   "default": "0",
+   "idx": 20
+  },
+  {
+   "fieldname": "cb_fin2",
+   "fieldtype": "Column Break",
+   "idx": 21
   },
   {
    "fieldname": "sale_amount",
    "fieldtype": "Currency",
-   "label": "Total Sale Price",
+   "label": "Toplam Satış Tutarı",
    "options": "currency",
    "default": "0",
-   "in_list_view": 1
+   "in_list_view": 1,
+   "idx": 22
   }
  ],
  "istable": 1,

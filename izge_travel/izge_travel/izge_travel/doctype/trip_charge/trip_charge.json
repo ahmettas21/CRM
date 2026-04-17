@@ -5,78 +5,128 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "sb_operasyon",
   "charge_type",
   "description",
+  "cb_op1",
+  "currency",
+  "related_traveler",
+  "cb_op2",
   "supplier",
+  "sb_finans",
   "cost_amount",
   "tax_amount",
+  "cb_fin1",
   "service_amount",
   "extra_amount",
-  "sale_amount",
-  "currency",
-  "related_traveler"
+  "cb_fin2",
+  "sale_amount"
  ],
  "fields": [
+  {
+   "fieldname": "sb_operasyon",
+   "fieldtype": "Section Break",
+   "label": "🔖 Ücret Özeti",
+   "idx": 1,
+   "hide_border": 1
+  },
   {
    "fieldname": "charge_type",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Charge Type",
+   "label": "Ücret Tipi",
    "options": "\nSeat\nCIP\nBundle\nBaggage\nTransfer\nPenalty\nReissue Fee\nOther",
-   "reqd": 1
+   "reqd": 1,
+   "idx": 2
   },
   {
    "fieldname": "description",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Description"
+   "label": "Açıklama",
+   "idx": 3
   },
   {
-   "fieldname": "supplier",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Supplier",
-   "options": "Supplier"
-  },
-  {
-   "fieldname": "cost_amount",
-   "fieldtype": "Currency",
-   "label": "Cost Amount"
-  },
-  {
-   "fieldname": "tax_amount",
-   "fieldtype": "Currency",
-   "label": "Tax Amount"
-  },
-  {
-   "fieldname": "service_amount",
-   "fieldtype": "Currency",
-   "label": "Service Fee"
-  },
-  {
-   "fieldname": "extra_amount",
-   "fieldtype": "Currency",
-   "label": "Extra Amount"
-  },
-  {
-   "fieldname": "sale_amount",
-   "fieldtype": "Currency",
-   "label": "Sale Amount",
-   "in_list_view": 1
+   "fieldname": "cb_op1",
+   "fieldtype": "Column Break",
+   "idx": 4
   },
   {
    "fieldname": "currency",
    "fieldtype": "Link",
-   "label": "Currency",
+   "label": "Para Birimi",
    "options": "Currency",
-   "default": "TRY"
+   "default": "TRY",
+   "idx": 5
   },
   {
    "fieldname": "related_traveler",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Related Traveler",
-   "options": "Traveler"
+   "label": "İlgili Yolcu",
+   "options": "Traveler",
+   "idx": 6
+  },
+  {
+   "fieldname": "cb_op2",
+   "fieldtype": "Column Break",
+   "idx": 7
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Tedarikçi",
+   "options": "Supplier",
+   "idx": 8
+  },
+  {
+   "fieldname": "sb_finans",
+   "fieldtype": "Section Break",
+   "label": "💰 Finansal Detaylar",
+   "idx": 9,
+   "hide_border": 1
+  },
+  {
+   "fieldname": "cost_amount",
+   "fieldtype": "Currency",
+   "label": "Maliyet",
+   "idx": 10
+  },
+  {
+   "fieldname": "tax_amount",
+   "fieldtype": "Currency",
+   "label": "Vergi Tutarı",
+   "idx": 11
+  },
+  {
+   "fieldname": "cb_fin1",
+   "fieldtype": "Column Break",
+   "idx": 12
+  },
+  {
+   "fieldname": "service_amount",
+   "fieldtype": "Currency",
+   "label": "Hizmet Bedeli",
+   "idx": 13
+  },
+  {
+   "fieldname": "extra_amount",
+   "fieldtype": "Currency",
+   "label": "Ekstra Tutar",
+   "idx": 14
+  },
+  {
+   "fieldname": "cb_fin2",
+   "fieldtype": "Column Break",
+   "idx": 15
+  },
+  {
+   "fieldname": "sale_amount",
+   "fieldtype": "Currency",
+   "label": "Satış Tutarı",
+   "in_list_view": 1,
+   "idx": 16
   }
  ],
  "index_web_pages_for_search": 1,

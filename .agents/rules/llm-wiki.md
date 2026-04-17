@@ -42,6 +42,19 @@ Wiki ile Raw arasındaki köprü her zaman şu formatta tıklanabilir linklerle 
 
 `wiki/mission_control.md` üzerinden kullanıcının yüksek seviyeli hedefleri (Neden yapıyoruz?) ve tamamlanma durumları takip edilmelidir.
 
+### 🤖 [RULE-M9C2P] Üstün Araç Kontrolü ve MCP İş Bölümü (MCP Supremacy)
+
+- Her zaman Model Context Protocol (MCP) üzerinden işlem yapılması standart araçlardan (curl, vb.) üstündür.
+- Projede 3 adet MCP kullanılmaktadır ve bu yetki devri **KESİNDİR**:
+  1. **GitHub MCP:** Repo okuma, dosya, commit, PR işleri. (Kalıcı Kod)
+  2. **ERPNext Runtime MCP:** Canlı veri, belge okuma/yazma, field metadata, raporlar. (Canlı Sistem)
+  3. **Frappe Development MCP:** DocType oluşturma, app, workspace, script, bench işleri. (Geliştirme Sistemi)
+- Her görevde "Önce Oku (Kör Create Yapma) -> Sonra Doğrula -> Kullanıcıdan Gerekirse Onay İste -> Sonra Uygula" döngüsü geçerlidir. Secret/Token bilgileri ASLA yazdırılmaz.
+> 🔗 **Detaylı Görev & Seçim Algoritması:** [wiki/mcp_agents.md](../../wiki/mcp_agents.md)
+> 🔗 **Teknik Konfigürasyon:** [raw/mcp_setup.md](../../raw/mcp_setup.md)
+
+
+
 ## 3. 🧠 Frappe Skill Sistemi (Zorunlu)
 
 Bu projede Frappe/ERPNext geliştirmesi yapılırken **`.agents/frappe_skills/skills/source/`** altındaki deterministik skill dosyaları referans alınmalıdır.
